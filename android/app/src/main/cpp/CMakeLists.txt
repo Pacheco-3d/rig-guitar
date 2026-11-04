@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.22.1)
+project(rig_audio LANGUAGES CXX)
+add_library(rig_audio SHARED NativeEngine.cpp)
+target_compile_features(rig_audio PRIVATE cxx_std_17)
+target_compile_options(rig_audio PRIVATE -O2 -Wall -Wextra)
+target_link_libraries(rig_audio aaudio android log)

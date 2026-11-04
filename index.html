@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#555454" />
+    <title>RIG Studio — Rack de guitarra</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="application">
+      <header class="app-header">
+        <a class="logo" href="/" aria-label="RIG Studio início"
+          ><span class="logo-emblem">≋</span
+          ><strong>Rig<span>Studio</span></strong></a
+        ><button id="live-view" class="steel-button" aria-pressed="false">
+          LIVE VIEW
+        </button>
+        <div class="header-meter">
+          <span>DEMO</span>
+          <div class="meter" id="meter"><i></i></div>
+          <span id="meter-value">−∞ dB</span>
+        </div>
+        <label class="master-control" for="master"
+          ><span>OUT</span
+          ><input
+            id="master"
+            type="range"
+            min="0"
+            max="100"
+            value="60"
+            aria-label="Volume de saída"
+          /><output id="master-value">60%</output></label
+        ><span class="engine-badge"><i></i> WEB AUDIO</span
+        ><button
+          id="help"
+          class="steel-button help-button"
+          aria-label="Como usar"
+        >
+          ?
+        </button>
+      </header>
+      <div class="main-layout">
+        <aside class="preset-browser" id="library-section">
+          <div class="browser-navigation">
+            <button
+              id="nav-studio"
+              class="steel-button active"
+              aria-pressed="true"
+            >
+              ⌕ Browser</button
+            ><button id="nav-library" class="steel-button" aria-pressed="false">
+              ▤ Componentes
+            </button>
+          </div>
+          <div id="browser-content">
+            <div class="browser-tabs" role="group" aria-label="Filtrar timbres">
+              <button class="active" data-filter="all" aria-pressed="true">
+                Todos os sons</button
+              ><button
+                id="nav-favorites"
+                data-filter="favorites"
+                aria-pressed="false"
+              >
+                Favoritos
+              </button>
+            </div>
+            <label class="search-box"
+              ><span aria-hidden="true">⌕</span
+              ><input
+                id="search"
+                type="search"
+                placeholder="Buscar timbre…"
+                aria-label="Buscar timbre"
+            /></label>
+            <section class="bank-panel">
+              <div class="list-heading">
+                <span>BANCOS</span><span>BANK MENU ▾</span>
+              </div>
+              <button class="bank selected" data-bank="all">
+                <span>001</span> Todos os amplificadores <b>◆</b></button
+              ><button class="bank" data-bank="british">
+                <span>002</span> British Collection</button
+              ><button class="bank" data-bank="american">
+                <span>003</span> American Collection</button
+              ><button class="bank" data-bank="modern">
+                <span>004</span> Modern High Gain
+              </button>
+            </section>
+            <section class="sound-panel">
+              <div class="list-heading">
+                <span>SONS <b id="preset-total">06</b></span
+                ><span>SOUND MENU ▾</span>
+              </div>
+              <div id="presets" class="preset-list"></div>
+              <div class="list-bottom">
+                PRESETS LOCAIS <span>NO NAVEGADOR</span>
+              </div>
+            </section>
+            <section class="ir-library">
+              <div class="list-heading">BIBLIOTECA DE IRs</div>
+              <label for="cabinet-ir">Gabinete / resposta ao impulso</label
+              ><select id="cabinet-ir"></select
+              ><button id="import-ir" class="steel-button">
+                Importar IR WAV</button
+              ><input
+                id="ir-file"
+                type="file"
+                accept=".wav,audio/wav,audio/x-wav"
+                hidden
+              />
+              <p id="ir-status">
+                3 filtros sintéticos originais · Não são capturas comerciais.
+              </p>
+            </section>
+            <section class="drive-library">
+              <div class="list-heading">BIBLIOTECA / GOOGLE DRIVE</div>
+              <p>
+                Selecione <strong>rig guitar</strong> na conta edu3dpb@gmail.com
+                pelo seletor de arquivos do Android.
+              </p>
+              <button id="connect-drive" class="steel-button">
+                Vincular pasta</button
+              ><button id="export-library" class="amber-button">
+                Exportar biblioteca</button
+              ><button id="import-presets" class="steel-button">
+                Importar presets</button
+              ><input
+                id="presets-file"
+                type="file"
+                accept="application/json,.json"
+                hidden
+              /><span id="drive-status">Pasta ainda não vinculada</span>
+            </section>
+            <div class="preset-info">
+              <span class="small-label">TIMBRE SELECIONADO</span>
+              <p id="preset-description">
+                Um clássico britânico, com calor e personalidade.
+              </p>
+            </div>
+          </div>
+          <section id="components-content" hidden>
+            <div class="list-heading">COMPONENTES DO RACK</div>
+            <p>Ative ou desative os módulos da sua cadeia.</p>
+            <div id="component-list"></div>
+            <div class="component-help">
+              Os controles de cada efeito ficam no rack à direita.
+            </div>
+          </section>
+          <div class="sidebar-footer">
+            <span>RIG STUDIO</span><span>HTML EDITION / 2.0</span>
+          </div>
+        </aside>
+        <main class="rack" id="studio-section">
+          <section class="preset-toolbar">
+            <span class="preset-slot">006</span>
+            <h1 id="preset-title">California Sunset</h1>
+            <button
+              id="favorite"
+              aria-pressed="true"
+              aria-label="Remover dos favoritos"
+            >
+              ★
+            </button>
+            <div class="preset-step">
+              <button id="previous-preset" aria-label="Timbre anterior">
+                ▴</button
+              ><button id="next-preset" aria-label="Próximo timbre">▾</button>
+            </div>
+            <button id="save-button" class="amber-button">Salvar como</button
+            ><button id="compare" class="amber-button" aria-pressed="false">
+              Comparar</button
+            ><button
+              id="reset"
+              class="amber-button"
+              aria-label="Restaurar timbre"
+            >
+              Restaurar
+            </button>
+          </section>
+          <section class="utility-bar">
+            <div class="utility-name">RACK VIEW</div>
+            <span class="chain-indicator"><i></i> CADEIA SERIAL</span
+            ><span class="utility-spacer"></span
+            ><button id="play-demo" class="steel-button">
+              <span id="play-icon">▶</span>
+              <span id="play-text">Ouvir timbre</span></button
+            ><button
+              id="global-bypass"
+              class="steel-button"
+              aria-pressed="false"
+            >
+              ⏻ Bypass</button
+            ><button
+              id="collapse-all"
+              class="steel-button"
+              aria-label="Recolher efeitos"
+            >
+              −
+            </button>
+          </section>
+          <section class="device-panel" aria-label="Entrada de guitarra">
+            <div class="device-title">
+              <span class="native-indicator"></span
+              ><strong>GUITARRA / AUDIO ENGINE</strong
+              ><span id="native-status"
+                >Prévia web · use o APK para entrada USB</span
+              >
+            </div>
+            <div class="device-controls">
+              <label
+                >ENTRADA<select id="input-device">
+                  <option value="0">Padrão do Android</option>
+                </select></label
+              ><label
+                >SAÍDA<select id="output-device">
+                  <option value="0">Padrão do Android</option>
+                </select></label
+              ><button id="connect-guitar" class="amber-button">
+                Conectar guitarra</button
+              ><button id="disconnect-guitar" class="steel-button" disabled>
+                Parar
+              </button>
+            </div>
+            <p>
+              Use uma interface de áudio USB OTG e fones com fio. Bluetooth
+              aumenta a latência. O som ao vivo para ao sair do app.
+            </p>
+          </section>
+          <div class="rack-bay">
+            <div id="pre-effects" class="pre-effects"></div>
+            <section class="amp-panel rack-module">
+              <div class="module-bar">
+                <button
+                  id="amp-power"
+                  class="module-power"
+                  aria-pressed="true"
+                  aria-label="Desligar amplificador"
+                >
+                  <span id="amp-led"></span>
+                </button>
+                <h2>Signature Amplifier</h2>
+                <span id="amp-state-label" class="module-status">Ligado</span
+                ><span class="module-screws">⊕</span>
+              </div>
+              <div class="amp-face">
+                <div class="amp-brand">
+                  <span class="model-category">BRITISH COLLECTION</span>
+                  <h3>
+                    <span id="model-heading">British</span>
+                    <b id="model-number">800</b>
+                  </h3>
+                  <p id="model-description">
+                    Ataque marcante. Personalidade de sobra.
+                  </p>
+                </div>
+                <div class="amp-control-strip">
+                  <label class="amp-picker" for="amp-model"
+                    ><span class="small-label">AMPLIFICADOR</span
+                    ><select id="amp-model">
+                      <option value="british">British 800</option>
+                      <option value="american">American 65</option>
+                      <option value="modern">Modern 515</option>
+                    </select></label
+                  >
+                  <div id="amp-controls" class="amp-controls"></div>
+                </div>
+              </div>
+            </section>
+            <section class="cabinet-module rack-module">
+              <div class="module-bar">
+                <span class="module-lamp"></span>
+                <h2>Matched Cabinet</h2>
+                <span class="module-status">4 × 12</span
+                ><span class="module-screws">⊕</span>
+              </div>
+              <div class="cabinet-controls">
+                <div class="cabinet-name">
+                  <strong>4×12 Vintage</strong
+                  ><span>Closed back enclosure</span>
+                </div>
+                <div class="microphone-drawing" aria-hidden="true">
+                  <span class="mic-head"></span><span class="mic-stand"></span
+                  ><span class="speaker-lines"></span>
+                </div>
+                <label for="mic"
+                  ><span class="small-label">MICROFONE / POSIÇÃO</span
+                  ><select id="mic">
+                    <option value="0">Dynamic 57 · Frontal</option>
+                    <option value="1">Ribbon 121 · Lateral</option>
+                    <option value="2">Condenser 87 · Ambiente</option>
+                  </select></label
+                ><span class="cabinet-badge">MATCHED<br />CABINET</span>
+              </div>
+              <div class="speaker-grille">
+                <div class="speaker-cone left"></div>
+                <div class="speaker-cone right"></div>
+                <span class="grille-logo">Rig</span
+                ><span class="grille-label">VINTAGE SERIES · 4×12</span>
+              </div>
+            </section>
+            <div id="pedals" class="pedals"></div>
+            <section class="output-module rack-module">
+              <div class="output-name">OUTPUT <span>STEREO</span></div>
+              <div class="player-track">
+                <strong id="engine-label">Pronto para tocar</strong
+                ><span id="engine-description"
+                  >Demo sintetizada · Sem entrada de guitarra</span
+                >
+              </div>
+              <div class="output-signal">
+                <span>SIGNAL</span><i id="output-indicator"></i>
+              </div>
+              <span class="output-limit">● LIMITER</span>
+            </section>
+          </div>
+          <section id="live-panel" aria-label="Controlador ao vivo">
+            <div class="live-heading">
+              <span class="live-led"></span> LIVE CONTROL
+              <span>FOOTSWITCH CONTROLLER</span>
+            </div>
+            <div id="live-switches"></div>
+            <p>Troque de timbre e ative os módulos sem abrir seus controles.</p>
+          </section>
+          <section class="audio-import">
+            <label for="audio-file"
+              ><span>↥</span> Carregar gravação<input
+                id="audio-file"
+                type="file"
+                accept="audio/*" /></label
+            ><span id="audio-file-label"
+              >Teste os efeitos com seu áudio. O arquivo fica no
+              navegador.</span
+            ><button id="clear-audio" hidden>Usar demo</button>
+          </section>
+        </main>
+      </div>
+      <footer class="status-bar">
+        <span><i></i> <span id="status-text">Pronto</span></span
+        ><span>COMP → DRIVE → AMP → CAB → DELAY → REVERB → OUT</span
+        ><span>LOCAL AUDIO ENGINE</span>
+      </footer>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog id="save-dialog">
+      <form id="save-form">
+        <span class="small-label">SOUND MENU / SAVE AS</span>
+        <h2>Salvar seu timbre</h2>
+        <p>Guarde o amplificador, os efeitos e os ajustes neste navegador.</p>
+        <label for="preset-name">Nome do timbre</label
+        ><input
+          id="preset-name"
+          maxlength="50"
+          required
+          autocomplete="off"
+          placeholder="Meu novo timbre"
+        />
+        <div class="dialog-actions">
+          <button id="cancel-save" type="button" class="steel-button">
+            Cancelar</button
+          ><button type="submit" class="amber-button">Salvar timbre</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="help-dialog">
+      <span class="small-label">RIG STUDIO / GUIA RÁPIDO</span>
+      <h2>Seu rack de guitarra.</h2>
+      <ol>
+        <li>
+          No Android, conecte uma interface USB, escolha a entrada e a saída e
+          toque em <strong>Conectar guitarra</strong>. Permita o acesso ao
+          áudio.
+        </li>
+        <li>
+          Escolha um banco e um som no Browser. Os presets de artistas são
+          inspirações, não versões oficiais.
+        </li>
+        <li>Ouça a demo ou carregue uma gravação de guitarra.</li>
+        <li>Ajuste os knobs com as barras ou as setas do teclado.</li>
+        <li>
+          Use os botões de energia para ignorar efeitos e
+          <strong>Comparar</strong> para ouvir os ajustes originais.
+        </li>
+        <li>Salve sua combinação em <strong>Salvar como</strong>.</li>
+      </ol>
+      <p>
+        Áudio processado com Web Audio. A demo é sintetizada. A entrada de
+        guitarra ao vivo está no APK Android. Os modelos não são emulações
+        físicas oficiais dos equipamentos de referência.
+      </p>
+      <button id="close-help" class="amber-button">Começar</button>
+    </dialog>
+    <script src="/library.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

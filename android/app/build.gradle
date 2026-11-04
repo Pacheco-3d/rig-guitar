@@ -1,0 +1,30 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.rigguitar.studio'
+    compileSdk 35
+    ndkVersion '27.2.12479018'
+    defaultConfig {
+        applicationId 'com.rigguitar.studio'
+        minSdk 28
+        targetSdk 35
+        versionCode 1
+        versionName '0.1.0'
+        externalNativeBuild { cmake { cppFlags '-std=c++17 -O2 -Wall -Wextra'; arguments '-DANDROID_STL=c++_static', '-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON' } }
+        ndk { abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64' }
+    }
+    externalNativeBuild { cmake { path 'src/main/cpp/CMakeLists.txt'; version '3.22.1' } }
+    buildTypes { release { minifyEnabled false } }
+    sourceSets { main { assets.srcDirs = ["$buildDir/generated/rigAssets"] } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+
+tasks.register('prepareRigAssets', Copy) {
+    from(rootProject.file('../')) { include 'index.html', 'style.css', 'app.js', 'library.js' }
+    into "$buildDir/generated/rigAssets/ui"
+}
+tasks.register('prepareRigLibrary', Copy) {
+    from rootProject.file('../library')
+    into "$buildDir/generated/rigAssets/library"
+}
+tasks.named('preBuild').configure { dependsOn 'prepareRigAssets', 'prepareRigLibrary' }

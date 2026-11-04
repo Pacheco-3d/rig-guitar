@@ -1,0 +1,1043 @@
+[
+  {
+    "name": "California Sunset",
+    "tag": "BRITISH · CRUNCH",
+    "description": "Um clássico britânico, com calor e personalidade.",
+    "model": "british",
+    "values": [
+      6.5,
+      5,
+      7,
+      6,
+      5.5,
+      7.5
+    ],
+    "favorite": true
+  },
+  {
+    "name": "Midnight Glass",
+    "tag": "AMERICAN · CLEAN",
+    "description": "Notas abertas, brilho suave e espaço para respirar.",
+    "model": "american",
+    "values": [
+      2,
+      5,
+      4,
+      7,
+      6,
+      6
+    ],
+    "favorite": true
+  },
+  {
+    "name": "Desert Highway",
+    "tag": "BRITISH · DRIVE",
+    "description": "Textura crua e médios presentes para riffs de estrada.",
+    "model": "british",
+    "values": [
+      8,
+      6,
+      7,
+      5,
+      4,
+      7
+    ]
+  },
+  {
+    "name": "Velvet Room",
+    "tag": "AMERICAN · AMBIENT",
+    "description": "Um som macio, envolvente e cheio de espaço.",
+    "model": "american",
+    "values": [
+      2.5,
+      6,
+      5,
+      4,
+      3,
+      6.5
+    ],
+    "favorite": true
+  },
+  {
+    "name": "Electric Avenue",
+    "tag": "BRITISH · BRIGHT",
+    "description": "Ataque definido e um brilho que atravessa a mix.",
+    "model": "british",
+    "values": [
+      5,
+      4,
+      6,
+      8,
+      7,
+      6
+    ]
+  },
+  {
+    "name": "After Hours",
+    "tag": "MODERN · HIGH GAIN",
+    "description": "Graves firmes, sustain longo e distorção intensa.",
+    "model": "modern",
+    "values": [
+      9,
+      7,
+      5,
+      4,
+      3,
+      7
+    ]
+  },
+  {
+    "name": "Glass Clean",
+    "tag": "AMERICAN · CLEAN",
+    "description": "Ponto de partida inspirado em Clean de estúdio. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Clean de estúdio",
+      "song": null,
+      "official": false
+    },
+    "model": "american",
+    "values": [
+      1.8,
+      5,
+      4.5,
+      6.5,
+      5,
+      7
+    ],
+    "pedals": [
+      {
+        "on": false,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          1.8
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "warm-vintage.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": true
+  },
+  {
+    "name": "Edge of Dublin",
+    "tag": "AMERICAN · CLEAN",
+    "description": "Ponto de partida inspirado em U2 / The Edge — Where the Streets Have No Name. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "U2 / The Edge",
+      "song": "Where the Streets Have No Name",
+      "official": false
+    },
+    "model": "american",
+    "values": [
+      3,
+      4.5,
+      6,
+      6.5,
+      6,
+      6
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          6.5,
+          4
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          6,
+          2
+        ]
+      }
+    ],
+    "irId": "warm-vintage.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Comfort Lead",
+    "tag": "BRITISH · DRIVE",
+    "description": "Ponto de partida inspirado em Pink Floyd / David Gilmour — Comfortably Numb. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Pink Floyd / David Gilmour",
+      "song": "Comfortably Numb",
+      "official": false
+    },
+    "model": "british",
+    "values": [
+      5.5,
+      5,
+      7,
+      5,
+      5,
+      7
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5.3,
+          3
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          6,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": true
+  },
+  {
+    "name": "Shine Clean",
+    "tag": "AMERICAN · CLEAN",
+    "description": "Ponto de partida inspirado em Pink Floyd / David Gilmour — Shine On You Crazy Diamond. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Pink Floyd / David Gilmour",
+      "song": "Shine On You Crazy Diamond",
+      "official": false
+    },
+    "model": "american",
+    "values": [
+      2.4,
+      5,
+      5.5,
+      6,
+      5.5,
+      7
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          4,
+          2.5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          6,
+          2
+        ]
+      }
+    ],
+    "irId": "warm-vintage.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Sweet Lead",
+    "tag": "BRITISH · DRIVE",
+    "description": "Ponto de partida inspirado em Guns N’ Roses / Slash — Sweet Child O’ Mine. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Guns N’ Roses / Slash",
+      "song": "Sweet Child O’ Mine",
+      "official": false
+    },
+    "model": "british",
+    "values": [
+      7.5,
+      5,
+      8,
+      6,
+      6,
+      7
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3,
+          2
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          6,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": true
+  },
+  {
+    "name": "Black Rhythm",
+    "tag": "MODERN · DRIVE",
+    "description": "Ponto de partida inspirado em Metallica — Enter Sandman. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Metallica",
+      "song": "Enter Sandman",
+      "official": false
+    },
+    "model": "modern",
+    "values": [
+      8,
+      7,
+      3,
+      6.5,
+      6,
+      6.5
+    ],
+    "pedals": [
+      {
+        "on": false,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          0
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Puppet Rhythm",
+    "tag": "MODERN · DRIVE",
+    "description": "Ponto de partida inspirado em Metallica — Master of Puppets. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Metallica",
+      "song": "Master of Puppets",
+      "official": false
+    },
+    "model": "modern",
+    "values": [
+      8.5,
+      6,
+      2.5,
+      7,
+      6.5,
+      6
+    ],
+    "pedals": [
+      {
+        "on": false,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          0
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Back in Crunch",
+    "tag": "BRITISH · DRIVE",
+    "description": "Ponto de partida inspirado em AC/DC / Angus Young — Back in Black. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "AC/DC / Angus Young",
+      "song": "Back in Black",
+      "official": false
+    },
+    "model": "british",
+    "values": [
+      6,
+      5,
+      7,
+      6.5,
+      6,
+      7
+    ],
+    "pedals": [
+      {
+        "on": false,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          0
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Little Wing Glass",
+    "tag": "AMERICAN · DRIVE",
+    "description": "Ponto de partida inspirado em Jimi Hendrix — Little Wing. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Jimi Hendrix",
+      "song": "Little Wing",
+      "official": false
+    },
+    "model": "american",
+    "values": [
+      4,
+      5.5,
+      6.5,
+      5.5,
+      5,
+      7
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          2
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "warm-vintage.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Texas Snap",
+    "tag": "AMERICAN · DRIVE",
+    "description": "Ponto de partida inspirado em Stevie Ray Vaughan — Pride and Joy. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Stevie Ray Vaughan",
+      "song": "Pride and Joy",
+      "official": false
+    },
+    "model": "american",
+    "values": [
+      5,
+      6,
+      6,
+      6,
+      6,
+      7
+    ],
+    "pedals": [
+      {
+        "on": false,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          2,
+          1.5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "warm-vintage.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Brown Lead",
+    "tag": "BRITISH · DRIVE",
+    "description": "Ponto de partida inspirado em Van Halen / Eddie Van Halen — Eruption. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Van Halen / Eddie Van Halen",
+      "song": "Eruption",
+      "official": false
+    },
+    "model": "british",
+    "values": [
+      8.5,
+      5.5,
+      7,
+      6,
+      6,
+      6.5
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          2.5,
+          2
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          6,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Teenage Fuzz",
+    "tag": "MODERN · DRIVE",
+    "description": "Ponto de partida inspirado em Nirvana / Kurt Cobain — Smells Like Teen Spirit. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Nirvana / Kurt Cobain",
+      "song": "Smells Like Teen Spirit",
+      "official": false
+    },
+    "model": "modern",
+    "values": [
+      8,
+      6,
+      5.5,
+      7,
+      5.5,
+      6.5
+    ],
+    "pedals": [
+      {
+        "on": false,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          0
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Purple Rain Space",
+    "tag": "AMERICAN · DRIVE",
+    "description": "Ponto de partida inspirado em Prince — Purple Rain. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Prince",
+      "song": "Purple Rain",
+      "official": false
+    },
+    "model": "american",
+    "values": [
+      4,
+      5,
+      6,
+      6.5,
+      5,
+      7
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          3
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          6,
+          2
+        ]
+      }
+    ],
+    "irId": "warm-vintage.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Sultans Clean",
+    "tag": "AMERICAN · CLEAN",
+    "description": "Ponto de partida inspirado em Dire Straits / Mark Knopfler — Sultans of Swing. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Dire Straits / Mark Knopfler",
+      "song": "Sultans of Swing",
+      "official": false
+    },
+    "model": "american",
+    "values": [
+      2.8,
+      4.5,
+      6,
+      6.5,
+      5.5,
+      7
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          2,
+          1.2
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "warm-vintage.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Sabbath Weight",
+    "tag": "BRITISH · DRIVE",
+    "description": "Ponto de partida inspirado em Black Sabbath / Tony Iommi — Iron Man. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Black Sabbath / Tony Iommi",
+      "song": "Iron Man",
+      "official": false
+    },
+    "model": "british",
+    "values": [
+      8,
+      7,
+      7.5,
+      5.5,
+      5,
+      6.5
+    ],
+    "pedals": [
+      {
+        "on": false,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          0
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Seven Nation",
+    "tag": "MODERN · DRIVE",
+    "description": "Ponto de partida inspirado em The White Stripes / Jack White — Seven Nation Army. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "The White Stripes / Jack White",
+      "song": "Seven Nation Army",
+      "official": false
+    },
+    "model": "modern",
+    "values": [
+      7,
+      7,
+      6,
+      4.5,
+      4,
+      6
+    ],
+    "pedals": [
+      {
+        "on": false,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          0
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Arena Lead",
+    "tag": "BRITISH · DRIVE",
+    "description": "Ponto de partida inspirado em Queen / Brian May — Bohemian Rhapsody. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Queen / Brian May",
+      "song": "Bohemian Rhapsody",
+      "official": false
+    },
+    "model": "british",
+    "values": [
+      7,
+      5,
+      8,
+      6,
+      7,
+      6.5
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          5,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          3.5,
+          2.5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          6,
+          2
+        ]
+      }
+    ],
+    "irId": "studio-reference.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  },
+  {
+    "name": "Ambient Horizon",
+    "tag": "AMERICAN · CLEAN",
+    "description": "Ponto de partida inspirado em Ambient / worship. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.",
+    "inspiration": {
+      "artist": "Ambient / worship",
+      "song": null,
+      "official": false
+    },
+    "model": "american",
+    "values": [
+      2.5,
+      4.5,
+      5,
+      6,
+      5,
+      7
+    ],
+    "pedals": [
+      {
+        "on": true,
+        "values": [
+          4,
+          5
+        ]
+      },
+      {
+        "on": false,
+        "values": [
+          3,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          7,
+          5
+        ]
+      },
+      {
+        "on": true,
+        "values": [
+          6,
+          4
+        ]
+      }
+    ],
+    "irId": "warm-vintage.wav",
+    "master": 55,
+    "microphone": 0,
+    "favorite": false
+  }
+]

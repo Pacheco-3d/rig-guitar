@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "description": "Original synthetic FIRs and unofficial inspired presets. No commercial IRs or official artist presets.",
+  "irs": [
+    {
+      "id": "studio-reference.wav",
+      "name": "Studio Reference 4×12",
+      "source": "Original synthetic FIR, not a measured cabinet",
+      "license": "CC0-1.0",
+      "sampleRate": 48000,
+      "samples": 1024
+    },
+    {
+      "id": "warm-vintage.wav",
+      "name": "Warm Vintage 1×12",
+      "source": "Original synthetic FIR, not a measured cabinet",
+      "license": "CC0-1.0",
+      "sampleRate": 48000,
+      "samples": 1024
+    },
+    {
+      "id": "bright-open.wav",
+      "name": "Bright Open 2×12",
+      "source": "Original synthetic FIR, not a measured cabinet",
+      "license": "CC0-1.0",
+      "sampleRate": 48000,
+      "samples": 1024
+    }
+  ]
+}

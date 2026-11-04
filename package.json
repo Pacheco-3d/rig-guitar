@@ -1,0 +1,20 @@
+{
+  "name": "rig-guitar",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "check": "node --check app.js && node --check server.mjs && node --check build.mjs",
+    "build": "node build.mjs",
+    "test:ui": "node tests/ui-check.cjs",
+    "test:bridge": "node tests/native-bridge.cjs",
+    "test:dsp": "g++ -std=c++17 -O2 -Wall -Wextra -Werror tests/dsp_test.cpp -o /tmp/rig-dsp-test && /tmp/rig-dsp-test",
+    "library": "python3 scripts/generate-library.py",
+    "format:check": "prettier --check app.js index.html style.css server.mjs build.mjs tests/*.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1",
+    "prettier": "3.6.2"
+  }
+}
