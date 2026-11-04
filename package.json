@@ -11,7 +11,8 @@
     "test:bridge": "node tests/native-bridge.cjs",
     "test:dsp": "g++ -std=c++17 -O2 -Wall -Wextra -Werror tests/dsp_test.cpp -o /tmp/rig-dsp-test && /tmp/rig-dsp-test",
     "library": "python3 scripts/generate-library.py",
-    "format:check": "prettier --check app.js index.html style.css server.mjs build.mjs tests/*.cjs"
+    "format:check": "prettier --check app.js index.html style.css server.mjs build.mjs tests/*.cjs",
+    "test:standalone": "node tests/standalone.cjs"
   },
   "devDependencies": {
     "playwright": "1.56.1",

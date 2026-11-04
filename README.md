@@ -62,6 +62,7 @@ npm run test:dsp        # requer g++ com C++17
 npx playwright install chromium
 npm run test:ui         # deixe o servidor aberto em outro terminal
 npm run test:bridge
+npm run test:standalone # valida o HTML embutido sem recursos remotos
 ```
 
 Para usar um Chromium existente, defina `PLAYWRIGHT_CHROMIUM_EXECUTABLE`. `RIG_TEST_URL` muda o endereço usado nos testes. As dependências npm são apenas para desenvolvimento; não fazem parte do APK.

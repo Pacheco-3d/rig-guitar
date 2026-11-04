@@ -37,6 +37,7 @@ jobs:
           done
           npm run test:ui
           npm run test:bridge
+          npm run test:standalone
       - name: Android tools
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
       - name: Build APK and lint

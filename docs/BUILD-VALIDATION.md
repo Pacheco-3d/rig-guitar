@@ -2,7 +2,7 @@
 
 Verified in the development environment:
 
-- JavaScript syntax and standalone HTML generation.
+- JavaScript syntax and standalone HTML generation; the generated document is rendered from its file contents with no remote asset requests.
 - Android debug APK built with AGP 8.9.2, Gradle 8.11.1, SDK 35, NDK 27.2.12479018 and CMake 3.22.1.
 - Android lint: **No issues found**.
 - Three native ABIs packaged: arm64-v8a, armeabi-v7a and x86_64.

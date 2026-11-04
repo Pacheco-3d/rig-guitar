@@ -6,18 +6,22 @@ const [html, css, js, library] = await Promise.all(
   ),
 );
 const standalone = html
+  .replace('href="/"', 'href="#studio-section"')
   .replace(
     '<script src="/library.js"></script>',
     () => `<script>\n${library}\n</script>`,
   )
   .replace(
-    '<link rel="stylesheet" href="/style.css">',
+    /<link\s+rel="stylesheet"\s+href="\/style\.css"\s*\/?>/,
     () => `<style>\n${css}\n</style>`,
   )
   .replace(
     '<script src="/app.js"></script>',
     () => `<script>\n${js.replace(/<\/script/gi, "<\\/script")}\n</script>`,
   );
+if (/src="\/(?:app|library)\.js"|href="\/style\.css"/.test(standalone)) {
+  throw new Error("Standalone packaging left an external application asset.");
+}
 await mkdir(new URL("dist/", root), { recursive: true });
 await writeFile(new URL("dist/rig-studio.html", root), standalone);
 console.log("Created dist/rig-studio.html — open directly in a browser.");
