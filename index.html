@@ -5,12 +5,3284 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#555454" />
     <title>RIG Studio — Rack de guitarra</title>
-    <link rel="stylesheet" href="/style.css" />
+    <style>
+:root {
+  color-scheme: dark;
+  --amber: #ffb522;
+  --text: #ece9e3;
+  --border: #242323;
+  --mono: "Courier New", monospace;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: #272729;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 24px 18px 35px;
+  background: radial-gradient(ellipse at 50% 0, #505052, #262628 70%);
+  min-height: 100vh;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  color: inherit;
+  touch-action: manipulation;
+}
+button {
+  border: 0;
+  background: none;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+}
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+[hidden] {
+  display: none !important;
+}
+.application {
+  max-width: 1280px;
+  margin: auto;
+  background: #646261;
+  border: 1px solid #93908c;
+  border-bottom-color: #282727;
+  border-radius: 7px;
+  box-shadow:
+    0 16px 55px #0008,
+    inset 0 0 0 1px #333;
+  overflow: hidden;
+}
+.app-header {
+  height: 70px;
+  background:
+    repeating-linear-gradient(0deg, #ffffff05 0 1px, transparent 1px 3px),
+    linear-gradient(#aaa7a2, #6f6d69 40%, #4d4c49);
+  box-shadow:
+    inset 0 1px 0 #e9e7e0,
+    inset 0 -1px 0 #353432;
+  display: flex;
+  gap: 23px;
+  align-items: center;
+  padding: 0 21px;
+}
+.logo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 217px;
+  filter: drop-shadow(0 1px 1px #0005);
+}
+.logo-emblem {
+  font-size: 34px;
+  line-height: 1;
+  width: 33px;
+  height: 33px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #f5f3e9;
+  border-radius: 50%;
+  font-family: Georgia, serif;
+  font-style: italic;
+  transform: rotate(-15deg);
+  color: #f5f3e9;
+}
+.logo strong {
+  font-family: Arial, sans-serif;
+  font-style: italic;
+  font-size: 28px;
+  letter-spacing: -1.3px;
+}
+.logo strong span {
+  font-weight: 450;
+}
+.steel-button {
+  background: linear-gradient(#aca9a4, #797671 48%, #696661);
+  border: 1px solid #494641;
+  border-top-color: #d1cdc5;
+  border-bottom-color: #34312d;
+  border-radius: 3px;
+  box-shadow:
+    0 1px 2px #0004,
+    inset 0 0 0 1px #ffffff0a;
+  color: #ece9e2;
+  text-shadow: 0 1px 1px #0008;
+  font-size: 10px;
+  min-height: 30px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+.steel-button:hover {
+  background: linear-gradient(#c1bcb5, #8b8275);
+}
+.steel-button.active,
+.steel-button[aria-pressed="true"] {
+  background: linear-gradient(#e7e3dc, #c4c1ba);
+  color: #292724;
+  text-shadow: 0 1px 0 #fff8;
+  border-color: #4c4842;
+  box-shadow: inset 0 1px 2px #0002;
+}
+.header-meter {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  font: 8px var(--mono);
+  color: #ddd7c9;
+}
+.meter {
+  flex: 1;
+  height: 12px;
+  min-width: 50px;
+  max-width: 130px;
+  border: 2px solid #3b3530;
+  border-radius: 2px;
+  background: repeating-linear-gradient(90deg, #3e2c20 0 3px, #251e19 3px 4px);
+  box-shadow: inset 0 1px 2px #0008;
+  overflow: hidden;
+}
+.meter i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: repeating-linear-gradient(90deg, #bd8e36 0 3px, #533f22 3px 4px);
+  transition: width 0.08s;
+}
+#meter-value {
+  font: 8px var(--mono);
+  width: 43px;
+  white-space: nowrap;
+  color: #d0c3a8;
+}
+.master-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 9px var(--mono);
+  color: #e1ded2;
+}
+.master-control input {
+  width: 85px;
+  height: 12px;
+  accent-color: #e4dfcf;
+}
+.master-control output {
+  font-size: 8px;
+  width: 27px;
+}
+.engine-badge {
+  font: 7px var(--mono);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  border: 1px solid #45423d;
+  border-radius: 3px;
+  padding: 6px;
+  background: #57534d;
+  color: #bdb6a8;
+}
+.engine-badge i {
+  width: 5px;
+  height: 5px;
+  background: #e4a43b;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #e4a43b77;
+}
+.help-button {
+  min-width: 27px;
+  padding: 5px;
+}
+#live-view {
+  font-size: 8px;
+  padding: 5px 11px;
+  min-height: 24px;
+}
+.main-layout {
+  display: grid;
+  grid-template-columns: 286px minmax(0, 1fr);
+  padding: 13px 13px 0;
+  gap: 13px;
+}
+.preset-browser {
+  background: linear-gradient(90deg, #77736f, #6a6762);
+  border: 1px solid #43403b;
+  border-top-color: #a09a90;
+  border-left-color: #99938a;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 3px #5a5650;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  min-width: 0;
+}
+.browser-navigation {
+  display: flex;
+  gap: 5px;
+  padding-bottom: 9px;
+}
+.browser-navigation button {
+  flex: 1;
+  font-size: 11px;
+  padding: 8px 3px;
+}
+.browser-tabs {
+  display: flex;
+  margin: 0 0 7px;
+  background: #4e4942;
+  border: 1px solid #35312c;
+  border-radius: 2px;
+}
+.browser-tabs button {
+  flex: 1;
+  padding: 6px 3px;
+  font-size: 9px;
+  color: #bcb4a7;
+  border-right: 1px solid #36312b;
+  background: linear-gradient(#77716a, #56504a);
+  text-shadow: 0 1px 1px #0008;
+}
+.browser-tabs button.active {
+  background: linear-gradient(#c7c0b4, #a09a8f);
+  color: #332e27;
+  text-shadow: none;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 9px;
+  background: #292522;
+  border: 1px solid #39312a;
+  border-top-color: #171412;
+  box-shadow: inset 0 1px 3px #0005;
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+.search-box > span {
+  color: #c99d58;
+  font-size: 17px;
+  line-height: 12px;
+}
+.search-box input {
+  color: #e4d5bc;
+  font-size: 11px;
+  border: 0;
+  background: none;
+  width: 100%;
+  min-width: 0;
+}
+.search-box input::placeholder {
+  color: #8e7b62;
+}
+.bank-panel,
+.sound-panel {
+  background: #251f1c;
+  border: 1px solid #33302a;
+  border-top-color: #27211b;
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px #81796d;
+  padding: 3px;
+  margin: 2px 2px 15px;
+  overflow: hidden;
+}
+.list-heading {
+  background: linear-gradient(90deg, #4f3a20, #29211a);
+  border-bottom: 1px solid #17130f;
+  color: #e6b051;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 5px;
+  font-size: 8px;
+  letter-spacing: 0.3px;
+}
+.list-heading > span:last-child {
+  font-size: 7px;
+  color: #b6a485;
+}
+.list-heading b {
+  font-size: 7px;
+  font-weight: 400;
+  color: #af8d56;
+  margin-left: 6px;
+}
+.bank {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  font-size: 10px;
+  color: #d1c4b2;
+  padding: 9px 6px;
+  border-bottom: 1px solid #49322255;
+  text-align: left;
+}
+.bank > span {
+  color: #d8a346;
+  font: 9px var(--mono);
+}
+.bank b {
+  margin-left: auto;
+  font-size: 7px;
+  color: #604512;
+}
+.bank.selected {
+  background: linear-gradient(#ffc74b, #e5a41f);
+  color: #2f2416;
+  text-shadow: 0 1px 0 #ffe5a44d;
+}
+.bank.selected > span {
+  color: #715012;
+}
+.bank:hover:not(.selected) {
+  background: #3e3023;
+}
+.sound-panel {
+  margin-top: 19px;
+  min-height: 310px;
+  flex: 1;
+}
+.preset-list {
+  min-height: 290px;
+  max-height: 440px;
+  overflow: auto;
+  scrollbar-color: #8e6a30 #352719;
+  scrollbar-width: thin;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 29px,
+    #49312366 29px 30px
+  );
+}
+.preset-item {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  min-height: 43px;
+  padding: 8px 6px;
+  align-items: center;
+  text-align: left;
+  border-bottom: 1px solid #4d382955;
+  color: #f0e5d7;
+}
+.preset-index {
+  font: 9px var(--mono);
+  color: #e2b565;
+  width: 22px;
+  flex-shrink: 0;
+}
+.preset-item > span:nth-child(2) {
+  min-width: 0;
+}
+.preset-item strong {
+  font-size: 10px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.preset-item small {
+  display: block;
+  font: 6px var(--mono);
+  color: #9e8160;
+  letter-spacing: 0.4px;
+  margin-top: 4px;
+}
+.preset-arrow {
+  margin-left: auto;
+  color: #bd8d35;
+  flex-shrink: 0;
+}
+.preset-arrow svg {
+  width: 10px;
+  height: 10px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.preset-item.selected {
+  background: linear-gradient(#ffc13f, #dfa129);
+  color: #281d0c;
+  box-shadow: inset 0 1px 0 #ffebae66;
+}
+.preset-item.selected .preset-index,
+.preset-item.selected small,
+.preset-item.selected .preset-arrow {
+  color: #70501d;
+}
+.preset-item:hover:not(.selected) {
+  background: #443122;
+}
+.list-bottom {
+  padding: 7px 4px;
+  font: 6px var(--mono);
+  color: #8e714f;
+  background: #2e251e;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #4e3b25;
+}
+.preset-info {
+  padding: 13px 7px;
+  background: #49423b;
+  border: 1px solid #75695a;
+  box-shadow: inset 0 1px 2px #0003;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+.small-label {
+  display: block;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #a59a87;
+}
+.preset-info p {
+  font-size: 10px;
+  color: #c8b9a4;
+  line-height: 1.7;
+  margin: 8px 0 0;
+}
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  color: #aba192;
+  font: 6px var(--mono);
+  padding: 17px 2px 3px;
+}
+.rack {
+  min-width: 0;
+}
+.preset-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #28211b;
+  border: 1px solid #a09380;
+  border-right-color: #393026;
+  border-bottom-color: #373025;
+  box-shadow:
+    0 0 0 2px #514a40,
+    inset 0 1px 3px #0008;
+  padding: 6px 8px;
+  border-radius: 2px;
+  min-height: 39px;
+}
+.preset-slot {
+  font: 9px var(--mono);
+  color: #b38235;
+  border-right: 1px solid #55412b;
+  padding-right: 9px;
+}
+.preset-toolbar h1 {
+  font-size: 13px;
+  font-weight: 400;
+  color: #edb942;
+  margin: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+#favorite {
+  color: #958266;
+  min-width: 23px;
+  min-height: 26px;
+  font-size: 17px;
+}
+#favorite[aria-pressed="true"] {
+  color: #f4ba3f;
+}
+.preset-step {
+  display: flex;
+  border: 1px solid #5e482b;
+  height: 24px;
+}
+.preset-step button {
+  font-size: 8px;
+  color: #c29b54;
+  padding: 2px 6px;
+}
+.preset-step button:first-child {
+  border-right: 1px solid #5e482b;
+}
+.amber-button {
+  font-size: 9px;
+  border: 1px solid #6d522c;
+  border-radius: 2px;
+  padding: 6px 8px;
+  min-height: 25px;
+  background: linear-gradient(#3b2e1e, #271e14);
+  color: #e2b355;
+  white-space: nowrap;
+}
+.amber-button:hover,
+.amber-button[aria-pressed="true"] {
+  background: linear-gradient(#d99926, #9a6412);
+  color: #241a0a;
+  border-color: #f8bd44;
+}
+.utility-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 43px;
+  padding: 7px 2px;
+}
+.utility-name {
+  font: 7px var(--mono);
+  color: #e5b65d;
+  padding: 5px 8px;
+  border: 1px solid #4e4133;
+  background: #393025;
+  border-radius: 2px;
+}
+.chain-indicator {
+  font: 6px var(--mono);
+  letter-spacing: 0.4px;
+  color: #c8beb0;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.chain-indicator i {
+  width: 4px;
+  height: 4px;
+  background: #d4a047;
+  border-radius: 50%;
+}
+.utility-spacer {
+  flex: 1;
+}
+.utility-bar .steel-button {
+  min-height: 26px;
+  font-size: 9px;
+  padding: 5px 10px;
+}
+#collapse-all {
+  font-size: 16px;
+  padding: 1px 7px;
+  min-width: 25px;
+}
+.rack-bay {
+  background: #383430;
+  border: 1px solid #9c9489;
+  border-bottom-color: #322d28;
+  border-right-color: #322d28;
+  box-shadow:
+    inset 0 0 0 3px #4b443c,
+    inset 0 0 15px #0008;
+  padding: 11px 13px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  border-radius: 3px;
+}
+.rack-module {
+  border: 1px solid #1c1916;
+  border-radius: 2px;
+  box-shadow: 0 2px 3px #0005;
+  position: relative;
+}
+.module-bar {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  padding: 4px 8px;
+  min-height: 30px;
+  background:
+    repeating-linear-gradient(90deg, #ffffff0b 0 1px, transparent 1px 3px),
+    linear-gradient(#efede9, #b2afaa 49%, #dbd9d3 51%, #bdbbb6);
+  border-top: 1px solid #f8f7f0;
+  border-bottom: 2px solid #342e29;
+  color: #211f1e;
+}
+.module-bar h2 {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  margin: 0;
+  font-weight: bold;
+  letter-spacing: -0.6px;
+  flex: 1;
+}
+.module-status {
+  font-size: 7px;
+  color: #5b5247;
+  white-space: nowrap;
+}
+.module-screws {
+  font-size: 12px;
+  color: #7c766e;
+  border-left: 1px solid #999085;
+  padding-left: 8px;
+  margin-left: 3px;
+}
+.module-power {
+  padding: 4px;
+  min-width: 19px;
+  min-height: 20px;
+  background: linear-gradient(#6d6a64, #45413b);
+  border: 1px solid #2c2822;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 1px #b5aa9788;
+  display: grid;
+  place-items: center;
+}
+.module-power span,
+.module-lamp {
+  width: 6px;
+  height: 6px;
+  background: #b92d21;
+  border-radius: 1px;
+  box-shadow:
+    0 0 3px #d74327b3,
+    inset 0 1px 1px #ffb08366;
+}
+.module-lamp {
+  display: block;
+  margin: 0 6px;
+}
+.module-power[aria-pressed="false"] span {
+  background: #4b4137;
+  box-shadow: none;
+}
+.amp-face {
+  background:
+    repeating-linear-gradient(25deg, #ffffff02 0 1px, transparent 1px 4px),
+    radial-gradient(ellipse at 50% 0, #393737, #17181a 80%);
+  padding: 15px 18px 18px;
+  border: 3px solid #716e68;
+  border-top: 0;
+}
+.amp-brand {
+  text-align: center;
+  margin-bottom: 16px;
+  border: 1px solid #6d6b65;
+  box-shadow: inset 0 0 0 2px #222527;
+  padding: 9px;
+  background:
+    repeating-linear-gradient(90deg, #53544f 0 1px, #30332f 1px 3px), #30342c;
+}
+.model-category {
+  font: 5px var(--mono);
+  letter-spacing: 2px;
+  color: #a7aa9b;
+}
+.amp-brand h3 {
+  font-family: Georgia, serif;
+  font-size: 32px;
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: -1.2px;
+  margin: 2px 0;
+  color: #f2f0e6;
+  text-shadow: 0 2px 2px #000;
+}
+.amp-brand h3 b {
+  font-weight: 400;
+  font-size: 26px;
+}
+.amp-brand p {
+  font-size: 7px;
+  color: #a6a79c;
+  margin: 5px 0 0;
+}
+.amp-control-strip {
+  display: grid;
+  grid-template-columns: 105px minmax(0, 1fr);
+  align-items: center;
+  gap: 17px;
+}
+.amp-picker {
+  display: grid;
+  gap: 8px;
+}
+.amp-picker .small-label {
+  font-size: 6px;
+  letter-spacing: 0.5px;
+}
+.amp-picker select {
+  width: 100%;
+  font-size: 9px;
+  background: #30291f;
+  border: 1px solid #7b6b54;
+  border-top-color: #151515;
+  color: #c9aa76;
+  padding: 6px 3px;
+  border-radius: 2px;
+}
+.amp-controls {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+.dial-control {
+  min-width: 0;
+  text-align: center;
+}
+.dial-track {
+  width: 46px;
+  height: 46px;
+  position: relative;
+  margin: 0 auto;
+}
+.dial-track:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed #b6b8a177;
+  transform: rotate(5deg);
+}
+.dial-face {
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f4f1d9, #c7c8b2 45%, #999e89 80%);
+  box-shadow:
+    0 3px 3px #000b,
+    inset 0 1px 1px #ffffee;
+  pointer-events: none;
+  border: 1px solid #a4ab93;
+}
+.dial-face:after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: calc(50% - 1px);
+  width: 2px;
+  height: 13px;
+  background: #4c5141;
+  box-shadow: 1px 0 0 #f7ffe277;
+  transform: rotate(20deg);
+  transform-origin: 50% 15px;
+}
+.dial-track input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: ew-resize;
+  z-index: 1;
+}
+.dial-track:focus-within {
+  outline: 1px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+.dial-label {
+  font-size: 7px;
+  margin: 8px 0 0;
+  display: block;
+  color: #c5c6ba;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.dial-control output {
+  display: block;
+  color: #8d9280;
+  font: 7px var(--mono);
+  margin: 5px 0;
+}
+.fine-slider {
+  width: 83%;
+  height: 10px;
+  accent-color: #a7ac94;
+  margin: 2px 0 0;
+  cursor: pointer;
+}
+.cabinet-controls {
+  background:
+    repeating-linear-gradient(0deg, #ffffff14 0 1px, transparent 1px 3px),
+    linear-gradient(#bbb9b3, #92918c);
+  color: #272622;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 15px;
+  border-bottom: 4px solid #4b4942;
+}
+.cabinet-name strong {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 16px;
+  display: block;
+}
+.cabinet-name > span {
+  font-size: 6px;
+  display: block;
+  color: #59564f;
+  margin-top: 5px;
+}
+.cabinet-controls .small-label {
+  font-size: 6px;
+  color: #5a554c;
+  margin-bottom: 6px;
+}
+.cabinet-controls select {
+  background: #494139;
+  border: 1px solid #e6ded0;
+  border-top-color: #3f3328;
+  border-left-color: #3f3328;
+  border-radius: 2px;
+  color: #c6ae85;
+  font-size: 9px;
+  padding: 5px;
+  max-width: 220px;
+}
+.cabinet-badge {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  text-align: right;
+  line-height: 1.1;
+  margin-left: auto;
+  color: #66625a;
+}
+.microphone-drawing {
+  position: relative;
+  width: 72px;
+  height: 39px;
+  border: 1px solid #77746c;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 2px #ffffff66;
+  background: #c7c5bc;
+  flex-shrink: 0;
+}
+.mic-head {
+  position: absolute;
+  width: 11px;
+  height: 22px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #272927, #c1c4b8, #565b54);
+  left: 16px;
+  top: 4px;
+  transform: rotate(-22deg);
+  box-shadow: 0 1px 1px #252824;
+}
+.mic-stand {
+  position: absolute;
+  left: 27px;
+  top: 19px;
+  width: 2px;
+  height: 17px;
+  background: #3c4037;
+  transform: rotate(-23deg);
+}
+.speaker-lines {
+  position: absolute;
+  right: 9px;
+  top: 6px;
+  width: 14px;
+  height: 26px;
+  border: 2px solid #7c8074;
+  border-left: 0;
+  border-radius: 0 10px 10px 0;
+}
+.speaker-grille {
+  height: 174px;
+  position: relative;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, #64664e44 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(
+      90deg,
+      #c1b89433 0 1px,
+      #25271c88 1px 3px,
+      #85897422 3px 4px
+    ),
+    #30362b;
+  border: 5px solid #191e1a;
+  box-shadow:
+    inset 0 0 0 2px #8e938188,
+    inset 0 0 25px #0008;
+}
+.speaker-cone {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  top: -2px;
+  background: radial-gradient(
+    circle,
+    #181d16 0 15%,
+    #3f463399 16% 18%,
+    #222a1c66 20% 36%,
+    #656c4c33 38% 40%,
+    #1d251a77 45% 63%,
+    #858b5d33 65% 67%,
+    #11190c44 70%
+  );
+  border: 2px solid #747d4d33;
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: blur(1px);
+}
+.speaker-cone.left {
+  left: 12%;
+}
+.speaker-cone.right {
+  right: 12%;
+}
+.grille-logo {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 41px;
+  font-weight: bold;
+  letter-spacing: -3px;
+  text-shadow:
+    0 2px 2px #000,
+    1px 0 0 #aaa;
+  color: #e9e8d6;
+}
+.grille-label {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font: 5px var(--mono);
+  letter-spacing: 1.5px;
+  color: #a4a98a;
+}
+.pre-effects,
+.pedals {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.pedal {
+  border: 1px solid #211c17;
+  background: linear-gradient(#c4c1b9, #b3afa6);
+  box-shadow: 0 2px 3px #0005;
+  border-radius: 2px;
+  overflow: hidden;
+  --pedal-color: #a49a79;
+  --panel-ink: #302c25;
+}
+.pedal.drive {
+  --pedal-color: #e8aa4e;
+  background: linear-gradient(90deg, #ceb272, #d3c8a6 45%, #c2b68d);
+}
+.pedal.tape {
+  --pedal-color: #c1634d;
+  background: linear-gradient(90deg, #d5d2ca, #a6a5a0);
+}
+.pedal.room {
+  --pedal-color: #559692;
+  background: linear-gradient(90deg, #bcc9c3, #98b0a9);
+}
+.pedal-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 13px;
+  color: var(--panel-ink);
+  background: repeating-linear-gradient(
+    0deg,
+    #ffffff0b 0 1px,
+    transparent 1px 3px
+  );
+}
+.pedal-identity {
+  width: 125px;
+  flex-shrink: 0;
+}
+.pedal-category {
+  display: block;
+  color: #625847;
+  font-size: 6px;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+.pedal-name {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: -0.8px;
+  margin: 0;
+  color: #2a251f;
+  text-shadow: 0 1px 0 #fff4;
+}
+.pedal-description {
+  font-size: 6px;
+  color: #6c6253;
+  margin: 5px 0 0;
+}
+.pedal-dials {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  flex: 1;
+  max-width: 290px;
+  margin-left: auto;
+}
+.pedal .dial-track {
+  width: 39px;
+  height: 39px;
+}
+.pedal .dial-face {
+  inset: 4px;
+  background: radial-gradient(circle at 35% 30%, #626058, #2d2d27 70%);
+  border-color: #867d69;
+  box-shadow:
+    0 2px 3px #0008,
+    inset 0 1px 1px #ffffff55;
+}
+.pedal .dial-face:after {
+  background: #d4c5a3;
+  transform: none;
+  height: 9px;
+  top: 4px;
+}
+.pedal .dial-track:before {
+  border-color: #6d625588;
+}
+.pedal .dial-label {
+  color: #52473b;
+  font-size: 6px;
+  margin-top: 5px;
+}
+.pedal .dial-control output {
+  color: #776855;
+  font-size: 6px;
+  margin: 3px 0;
+}
+.pedal .fine-slider {
+  height: 8px;
+  width: 70%;
+  accent-color: #5d5141;
+  margin: 0;
+}
+.pedal-number {
+  font: 8px var(--mono);
+  color: #6c604e;
+  border: 1px solid #80735d;
+  padding: 4px;
+  margin-left: 13px;
+}
+.footswitch {
+  min-width: 22px;
+  min-height: 25px;
+  padding: 3px;
+  background: linear-gradient(#8b857a, #5a5349);
+  border: 1px solid #443a2f;
+  box-shadow: inset 0 1px 0 #d3c7b3;
+  border-radius: 2px;
+  display: grid;
+  place-items: center;
+  align-self: flex-start;
+  margin-top: 1px;
+}
+.footswitch .power-led {
+  width: 7px;
+  height: 7px;
+  background: #bd3027;
+  border: 1px solid #6b211b;
+  box-shadow:
+    0 0 3px #ff6f44aa,
+    inset 0 1px 1px #ffb48e;
+  border-radius: 1px;
+}
+.pedal.disabled .power-led {
+  background: #493e31;
+  box-shadow: none;
+  border-color: #302a22;
+}
+.pedal.disabled .pedal-name {
+  color: #72695c;
+}
+.pedal.disabled .pedal-dials {
+  opacity: 0.5;
+}
+.module-collapse {
+  align-self: flex-start;
+  min-width: 20px;
+  min-height: 22px;
+  padding: 1px;
+  font-size: 14px;
+  color: #6b6153;
+  border: 1px solid #8d8371;
+  border-radius: 2px;
+  background: #ffffff22;
+}
+.pedal.collapsed .pedal-dials,
+.pedal.collapsed .pedal-description,
+.pedal.collapsed .pedal-number {
+  display: none;
+}
+.pedal.collapsed .pedal-row {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.pedal.collapsed .pedal-name {
+  font-size: 16px;
+}
+.pedal.collapsed .pedal-identity {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pedal.collapsed .pedal-category {
+  font-size: 6px;
+  margin: 0;
+}
+.pedal.collapsed .module-collapse {
+  margin-left: auto;
+}
+.output-module {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 11px 13px;
+  background:
+    repeating-linear-gradient(0deg, #ffffff11 0 1px, transparent 1px 3px),
+    linear-gradient(#cccac2, #8e8d85);
+  color: #383d3c;
+}
+.output-name {
+  font-family: Impact, Arial, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: #3c5966;
+}
+.output-name span {
+  font: 5px var(--mono);
+  display: block;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  color: #69726f;
+}
+.player-track {
+  flex: 1;
+  min-width: 0;
+}
+.player-track strong {
+  font-size: 9px;
+  font-weight: 400;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.player-track > span {
+  display: block;
+  color: #73736b;
+  font-size: 6px;
+  margin-top: 4px;
+}
+.output-signal {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 6px var(--mono);
+  color: #59645c;
+}
+.output-signal i {
+  width: 40px;
+  height: 6px;
+  background: #344348;
+  border: 1px solid #6c7772;
+  box-shadow: inset 0 1px 1px #0005;
+  transition: background 0.1s;
+}
+.output-signal i.active {
+  background: #cda54e;
+  box-shadow: 0 0 6px #e4b85655;
+}
+.output-limit {
+  font: 6px var(--mono);
+  color: #57603d;
+}
+.audio-import {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 8px;
+  padding: 12px 3px;
+  color: #c7bbaa;
+  min-height: 42px;
+}
+.audio-import label {
+  position: relative;
+  min-height: 26px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #f6d28b;
+  border: 1px solid #776044;
+  background: #544739;
+  border-radius: 2px;
+  padding: 5px 8px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.audio-import label > span {
+  font-size: 12px;
+}
+.audio-import input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+}
+.audio-import label:focus-within {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+#audio-file-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#clear-audio {
+  font-size: 8px;
+  color: #f7c86e;
+  white-space: nowrap;
+  text-decoration: underline;
+}
+.status-bar {
+  height: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  border-top: 1px solid #8a8174;
+  background: linear-gradient(#514a41, #464038);
+  color: #a69783;
+  font: 6px var(--mono);
+  gap: 10px;
+}
+.status-bar > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.status-bar i {
+  width: 4px;
+  height: 4px;
+  background: #cf9e4d;
+  border-radius: 50%;
+}
+.empty {
+  font-size: 10px;
+  padding: 18px 8px;
+  color: #b49a78;
+  line-height: 1.8;
+}
+#components-content > p,
+.component-help {
+  font-size: 10px;
+  color: #d0bfa9;
+  line-height: 1.8;
+  padding: 4px 7px;
+}
+.component-help {
+  color: #a59885;
+  font-size: 9px;
+  border-top: 1px solid #8c7e6c;
+  margin-top: 18px;
+  padding-top: 14px;
+}
+.component-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 9px;
+  background: #312922;
+  color: #cbb38c;
+  border-bottom: 1px solid #5d4b33;
+  text-align: left;
+  font-size: 11px;
+}
+.component-button > i {
+  width: 6px;
+  height: 6px;
+  border: 1px solid #634732;
+  background: #49392b;
+}
+.component-button[aria-pressed="true"] > i {
+  background: #c5953b;
+  box-shadow: 0 0 4px #e6a74655;
+}
+.component-button > span {
+  margin-left: auto;
+  font: 7px var(--mono);
+  color: #8e7148;
+}
+.bypassed .amp-panel,
+.bypassed .pedal {
+  filter: saturate(0.15);
+}
+.application.live .preset-browser {
+  display: none;
+}
+.application.live .main-layout {
+  grid-template-columns: 1fr;
+}
+.application.live .rack-bay {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+dialog {
+  background: linear-gradient(#736a5c, #4b4338);
+  border: 1px solid #b9a88c;
+  border-radius: 4px;
+  color: #f1e2c9;
+  padding: 27px;
+  width: min(430px, calc(100vw - 30px));
+  box-shadow: 0 15px 70px #0009;
+}
+dialog::backdrop {
+  background: #16120ed9;
+  backdrop-filter: blur(4px);
+}
+dialog h2 {
+  font-size: 23px;
+  font-weight: 400;
+  margin: 12px 0;
+}
+dialog p,
+dialog li {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #d1bea1;
+}
+dialog ol {
+  padding-left: 18px;
+}
+dialog label {
+  display: block;
+  margin: 20px 0 9px;
+  font-size: 12px;
+}
+dialog input {
+  width: 100%;
+  background: #2f271d;
+  color: #f6dfb8;
+  border: 1px solid #ad8b56;
+  border-top-color: #21180f;
+  border-radius: 2px;
+  padding: 11px;
+}
+dialog .small-label {
+  color: #c3a26b;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+.dialog-actions button,
+dialog > .amber-button {
+  min-height: 34px;
+  padding: 8px 14px;
+}
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 15px);
+  opacity: 0;
+  pointer-events: none;
+  background: #35291a;
+  border: 1px solid #b08943;
+  color: #edd4a5;
+  padding: 13px 20px;
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 1.7;
+  max-width: calc(100vw - 30px);
+  width: max-content;
+  z-index: 20;
+  transition: 0.2s;
+  box-shadow: 0 5px 25px #0007;
+}
+#toast.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (min-width: 1350px) {
+  .rack-bay {
+    padding: 15px 18px;
+  }
+  .speaker-grille {
+    height: 192px;
+  }
+  .amp-face {
+    padding: 17px 23px 20px;
+  }
+  .amp-controls {
+    gap: 15px;
+  }
+  .dial-track {
+    width: 52px;
+    height: 52px;
+  }
+  .pedal-row {
+    padding: 13px 17px;
+  }
+  .pedal-dials {
+    max-width: 350px;
+  }
+  .preset-list {
+    max-height: 520px;
+  }
+  .sound-panel {
+    min-height: 390px;
+  }
+  .preset-item {
+    min-height: 48px;
+  }
+  .app-header {
+    height: 76px;
+  }
+}
+@media (max-width: 1100px) {
+  .app-header {
+    gap: 16px;
+    padding: 0 17px;
+  }
+  .logo {
+    min-width: 210px;
+  }
+  .main-layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 11px;
+    padding: 12px 11px 0;
+  }
+  .engine-badge {
+    display: none;
+  }
+  .master-control input {
+    width: 65px;
+  }
+  .preset-toolbar {
+    gap: 6px;
+    padding: 6px;
+  }
+  .preset-toolbar h1 {
+    font-size: 11px;
+  }
+  .amber-button {
+    font-size: 8px;
+    padding: 6px;
+  }
+  .amp-control-strip {
+    grid-template-columns: 85px minmax(0, 1fr);
+    gap: 13px;
+  }
+  .amp-controls {
+    gap: 5px;
+  }
+  .dial-track {
+    width: 38px;
+    height: 38px;
+  }
+  .dial-label {
+    font-size: 6px;
+  }
+  .dial-face:after {
+    height: 10px;
+  }
+  .amp-face {
+    padding: 13px 14px 16px;
+  }
+  .pedal-identity {
+    width: 106px;
+  }
+  .pedal-name {
+    font-size: 18px;
+  }
+  .pedal-row {
+    gap: 11px;
+    padding: 10px;
+  }
+  .pedal-dials {
+    max-width: 240px;
+    gap: 12px;
+  }
+  .pedal .dial-track {
+    width: 35px;
+    height: 35px;
+  }
+  .pedal-number {
+    display: none;
+  }
+  .cabinet-controls {
+    gap: 12px;
+    padding: 10px;
+  }
+  .microphone-drawing {
+    display: none;
+  }
+  .cabinet-badge {
+    font-size: 9px;
+  }
+  .preset-slot {
+    display: none;
+  }
+  .utility-bar {
+    gap: 7px;
+  }
+  .chain-indicator {
+    font-size: 5px;
+  }
+  .utility-name {
+    font-size: 6px;
+  }
+  .speaker-grille {
+    height: 154px;
+  }
+}
+@media (max-width: 850px) {
+  body {
+    padding: 14px 10px;
+  }
+  .app-header {
+    gap: 12px;
+    height: 64px;
+  }
+  .logo {
+    min-width: 185px;
+  }
+  .logo strong {
+    font-size: 24px;
+  }
+  .logo-emblem {
+    width: 29px;
+    height: 29px;
+    font-size: 29px;
+  }
+  #live-view {
+    display: none;
+  }
+  .header-meter {
+    font-size: 6px;
+    gap: 6px;
+  }
+  .meter {
+    min-width: 35px;
+  }
+  #meter-value {
+    font-size: 6px;
+    width: 34px;
+  }
+  .master-control {
+    font-size: 7px;
+  }
+  .master-control input {
+    width: 53px;
+  }
+  .master-control output {
+    font-size: 7px;
+  }
+  .main-layout {
+    grid-template-columns: 210px minmax(0, 1fr);
+    padding: 10px 9px 0;
+    gap: 9px;
+  }
+  .preset-browser {
+    padding: 8px;
+  }
+  .browser-navigation button {
+    font-size: 9px;
+  }
+  .bank {
+    font-size: 9px;
+    padding: 10px 5px;
+  }
+  .bank > span {
+    font-size: 8px;
+  }
+  .list-heading {
+    font-size: 7px;
+  }
+  .list-heading > span:last-child {
+    font-size: 6px;
+  }
+  .preset-toolbar {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .preset-toolbar h1 {
+    flex-basis: calc(100% - 58px);
+    font-size: 12px;
+    min-height: 20px;
+    line-height: 20px;
+  }
+  .preset-step {
+    margin-right: auto;
+  }
+  .preset-toolbar .amber-button {
+    font-size: 8px;
+  }
+  .amp-control-strip {
+    grid-template-columns: 1fr;
+  }
+  .amp-picker {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .amp-picker select {
+    width: 140px;
+  }
+  .amp-brand {
+    margin-bottom: 12px;
+  }
+  .amp-controls {
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .dial-track {
+    width: 35px;
+    height: 35px;
+  }
+  .dial-label {
+    font-size: 5px;
+    letter-spacing: 0;
+  }
+  .fine-slider {
+    width: 85%;
+  }
+  .utility-name {
+    display: none;
+  }
+  .chain-indicator {
+    font-size: 6px;
+  }
+  .utility-bar .steel-button {
+    font-size: 8px;
+    padding: 5px 7px;
+  }
+  .module-bar h2 {
+    font-size: 16px;
+  }
+  .module-status {
+    font-size: 6px;
+  }
+  .pedal-row {
+    gap: 8px;
+  }
+  .pedal-identity {
+    width: 95px;
+  }
+  .pedal-name {
+    font-size: 16px;
+  }
+  .pedal-category {
+    font-size: 5px;
+    letter-spacing: 0.4px;
+  }
+  .pedal-description {
+    font-size: 5px;
+  }
+  .pedal-dials {
+    gap: 9px;
+  }
+  .pedal .dial-label {
+    font-size: 5px;
+  }
+  .pedal .fine-slider {
+    width: 85%;
+  }
+  .module-collapse {
+    min-width: 16px;
+    font-size: 12px;
+  }
+  .footswitch {
+    min-width: 19px;
+    min-height: 22px;
+  }
+  .cabinet-controls {
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+  .cabinet-name strong {
+    font-size: 15px;
+  }
+  .cabinet-name > span {
+    font-size: 5px;
+  }
+  .cabinet-controls label {
+    margin-left: auto;
+  }
+  .cabinet-controls select {
+    font-size: 8px;
+    max-width: 155px;
+  }
+  .cabinet-badge {
+    display: none;
+  }
+  .speaker-grille {
+    height: 146px;
+  }
+  .speaker-cone {
+    width: 140px;
+    height: 140px;
+    top: 0;
+  }
+  .output-module {
+    gap: 12px;
+    padding: 10px;
+  }
+  .output-name {
+    font-size: 13px;
+  }
+  .output-signal {
+    display: none;
+  }
+  .output-limit {
+    font-size: 5px;
+  }
+  .audio-import {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+  }
+  #audio-file-label {
+    order: 3;
+    flex-basis: 100%;
+    white-space: normal;
+    font-size: 7px;
+    line-height: 1.6;
+  }
+  .status-bar {
+    font-size: 5px;
+    padding: 0 12px;
+  }
+  .status-bar > span:last-child {
+    display: none;
+  }
+  .sound-panel {
+    min-height: 340px;
+  }
+  .preset-list {
+    min-height: 320px;
+    max-height: 480px;
+  }
+  .preset-item {
+    min-height: 46px;
+  }
+  .preset-item strong {
+    font-size: 9px;
+  }
+  .preset-item small {
+    font-size: 5px;
+  }
+  .preset-info {
+    padding: 11px 6px;
+  }
+  .preset-info p {
+    font-size: 9px;
+  }
+  .sidebar-footer {
+    font-size: 5px;
+    gap: 6px;
+  }
+}
+@media (max-width: 620px) {
+  body {
+    padding: 8px 6px 20px;
+  }
+  .application {
+    border-radius: 4px;
+  }
+  .app-header {
+    height: auto;
+    min-height: 66px;
+    padding: 13px 12px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .logo {
+    min-width: 0;
+    flex: 1;
+  }
+  .logo strong {
+    font-size: 25px;
+  }
+  .logo-emblem {
+    width: 28px;
+    height: 28px;
+    font-size: 28px;
+  }
+  .help-button {
+    order: 2;
+    min-width: 27px;
+    font-size: 12px;
+  }
+  .header-meter {
+    order: 3;
+    flex: 1;
+    font-size: 7px;
+  }
+  .meter {
+    max-width: 110px;
+    height: 11px;
+  }
+  #meter-value {
+    font-size: 7px;
+    width: 40px;
+  }
+  .master-control {
+    order: 4;
+    font-size: 8px;
+  }
+  .master-control input {
+    width: 65px;
+    height: 18px;
+  }
+  .master-control output {
+    font-size: 8px;
+  }
+  .main-layout {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 9px 0;
+    gap: 13px;
+  }
+  .preset-browser {
+    padding: 10px;
+    order: 2;
+  }
+  .rack {
+    order: 1;
+    width: 100%;
+  }
+  .preset-toolbar {
+    gap: 5px;
+    padding: 8px;
+  }
+  .preset-toolbar h1 {
+    font-size: 13px;
+  }
+  .preset-step {
+    margin-right: auto;
+    height: 28px;
+  }
+  .preset-step button {
+    padding: 3px 9px;
+    font-size: 10px;
+  }
+  .preset-toolbar .amber-button {
+    font-size: 9px;
+    padding: 7px 9px;
+    min-height: 29px;
+  }
+  .utility-bar {
+    min-height: 46px;
+    gap: 7px;
+  }
+  .utility-bar .steel-button {
+    min-height: 30px;
+    font-size: 9px;
+  }
+  .chain-indicator {
+    font-size: 5px;
+    gap: 4px;
+  }
+  .rack-bay {
+    padding: 9px 7px;
+    gap: 8px;
+  }
+  .amp-face {
+    padding: 13px 12px 16px;
+  }
+  .amp-brand h3 {
+    font-size: 31px;
+  }
+  .amp-brand p {
+    font-size: 8px;
+  }
+  .model-category {
+    font-size: 5px;
+  }
+  .amp-picker select {
+    font-size: 10px;
+    padding: 7px 4px;
+  }
+  .amp-picker .small-label {
+    font-size: 7px;
+  }
+  .amp-controls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px 10px;
+    margin-top: 10px;
+  }
+  .dial-track {
+    width: 50px;
+    height: 50px;
+  }
+  .dial-face:after {
+    height: 15px;
+  }
+  .dial-label {
+    font-size: 8px;
+    margin-top: 8px;
+  }
+  .dial-control output {
+    font-size: 8px;
+    margin: 6px 0;
+  }
+  .fine-slider {
+    height: 18px;
+    width: 75%;
+    margin: 0;
+  }
+  .module-bar {
+    min-height: 31px;
+  }
+  .module-bar h2 {
+    font-size: 18px;
+  }
+  .module-status {
+    font-size: 6px;
+  }
+  .cabinet-controls {
+    padding: 11px 12px;
+    gap: 13px;
+  }
+  .cabinet-name strong {
+    font-size: 16px;
+  }
+  .cabinet-name > span {
+    font-size: 6px;
+  }
+  .cabinet-controls label {
+    margin-left: 0;
+    flex-basis: 100%;
+    border-top: 1px solid #89867e;
+    padding-top: 9px;
+  }
+  .cabinet-controls .small-label {
+    font-size: 7px;
+  }
+  .cabinet-controls select {
+    font-size: 10px;
+    padding: 7px;
+    width: 100%;
+    max-width: none;
+  }
+  .speaker-grille {
+    height: 155px;
+  }
+  .speaker-cone {
+    width: 155px;
+    height: 155px;
+  }
+  .speaker-cone.left {
+    left: 0;
+  }
+  .speaker-cone.right {
+    right: 0;
+  }
+  .pedal-row {
+    gap: 9px;
+    padding: 11px 9px;
+    flex-wrap: wrap;
+  }
+  .pedal-identity {
+    width: auto;
+    flex: 1;
+  }
+  .pedal-name {
+    font-size: 21px;
+  }
+  .pedal-category {
+    font-size: 6px;
+    letter-spacing: 0.7px;
+  }
+  .pedal-description {
+    font-size: 6px;
+  }
+  .pedal-dials {
+    flex-basis: 100%;
+    order: 3;
+    margin: 3px 0 0;
+    max-width: none;
+    gap: 25px;
+    padding: 3px 18px 0;
+  }
+  .pedal .dial-track {
+    width: 44px;
+    height: 44px;
+  }
+  .pedal .dial-label {
+    font-size: 7px;
+    margin-top: 7px;
+  }
+  .pedal .dial-control output {
+    font-size: 8px;
+    margin: 4px 0;
+  }
+  .pedal .fine-slider {
+    height: 16px;
+    width: 80%;
+  }
+  .module-collapse {
+    min-width: 26px;
+    min-height: 27px;
+    font-size: 16px;
+  }
+  .footswitch {
+    min-width: 25px;
+    min-height: 27px;
+  }
+  .pedal.collapsed .pedal-name {
+    font-size: 18px;
+  }
+  .pedal.collapsed .pedal-category {
+    font-size: 6px;
+  }
+  .output-module {
+    padding: 11px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .output-name {
+    font-size: 16px;
+  }
+  .player-track strong {
+    font-size: 10px;
+  }
+  .player-track > span {
+    font-size: 7px;
+    line-height: 1.6;
+    max-width: 175px;
+  }
+  .output-limit {
+    font-size: 6px;
+    margin-left: auto;
+  }
+  .audio-import {
+    padding: 12px 2px;
+  }
+  .audio-import label {
+    min-height: 32px;
+    font-size: 10px;
+  }
+  #audio-file-label {
+    font-size: 8px;
+  }
+  .browser-navigation button {
+    font-size: 12px;
+    padding: 10px;
+  }
+  .browser-tabs button {
+    font-size: 10px;
+    padding: 8px;
+  }
+  .search-box {
+    padding: 11px;
+  }
+  .search-box input {
+    font-size: 12px;
+  }
+  .list-heading {
+    font-size: 9px;
+    padding: 7px 6px;
+  }
+  .list-heading > span:last-child {
+    font-size: 7px;
+  }
+  .bank {
+    font-size: 11px;
+    padding: 10px 6px;
+  }
+  .bank > span {
+    font-size: 9px;
+  }
+  .sound-panel {
+    min-height: 0;
+    margin-top: 17px;
+  }
+  .preset-list {
+    min-height: 0;
+    max-height: 310px;
+  }
+  .preset-item {
+    padding: 10px 7px;
+    min-height: 49px;
+  }
+  .preset-item strong {
+    font-size: 11px;
+  }
+  .preset-item small {
+    font-size: 7px;
+  }
+  .preset-index {
+    font-size: 9px;
+  }
+  .preset-info p {
+    font-size: 11px;
+  }
+  .sidebar-footer {
+    font-size: 6px;
+  }
+  .status-bar {
+    margin-top: 12px;
+    height: 30px;
+    font-size: 5px;
+    gap: 8px;
+  }
+  .status-bar > span:nth-child(2) {
+    max-width: 220px;
+    text-align: right;
+    line-height: 1.7;
+  }
+  .application.live .rack-bay {
+    padding: 10px;
+  }
+  .application.live .main-layout {
+    display: block;
+  }
+  #live-view {
+    display: block;
+    font-size: 7px;
+    padding: 5px 8px;
+  }
+  #components-content > p,
+  .component-help {
+    font-size: 11px;
+  }
+  .component-button {
+    font-size: 12px;
+    padding: 15px 10px;
+  }
+  .component-button > span {
+    font-size: 9px;
+  }
+  #toast {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+.amp-panel[data-model="american"] .amp-face {
+  background:
+    repeating-linear-gradient(35deg, #ffffff06 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at 50% 0, #743f2d, #321c15 80%);
+}
+.amp-panel[data-model="american"] .amp-brand {
+  background: repeating-linear-gradient(
+    90deg,
+    #a76a4f33 0 1px,
+    #442317 1px 3px
+  );
+}
+.cabinet-module[data-model="american"] .speaker-grille {
+  background:
+    repeating-linear-gradient(0deg, #8b492c44 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, #bc795033 0 1px, #2a181288 1px 3px),
+    #4d251d;
+}
+.amp-panel[data-model="modern"] .amp-face {
+  background:
+    repeating-linear-gradient(25deg, #ffffff03 0 1px, transparent 1px 4px),
+    radial-gradient(ellipse at 50% 0, #302d43, #16131e 80%);
+}
+.amp-panel[data-model="modern"] .amp-brand {
+  background: repeating-linear-gradient(
+    90deg,
+    #65617d44 0 1px,
+    #242132 1px 3px
+  );
+}
+/* A bounded rack and independent browsers follow the desktop plugin workflow. */
+@media (min-width: 621px) {
+  .application {
+    height: min(920px, calc(100dvh - 60px));
+    min-height: 640px;
+    display: flex;
+    flex-direction: column;
+  }
+  .app-header,
+  .status-bar {
+    flex-shrink: 0;
+  }
+  .main-layout {
+    flex: 1;
+    min-height: 0;
+  }
+  .rack {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .preset-toolbar,
+  .utility-bar,
+  .audio-import {
+    flex-shrink: 0;
+  }
+  .rack-bay {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #a9a195 #48413a;
+  }
+  .rack-bay > * {
+    flex-shrink: 0;
+  }
+  .preset-browser {
+    min-height: 0;
+    overflow: hidden;
+  }
+  #browser-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+  .bank-panel,
+  .preset-info,
+  .browser-navigation,
+  .search-box,
+  .browser-tabs {
+    flex-shrink: 0;
+  }
+  .bank-panel {
+    margin-bottom: 3px;
+  }
+  .sound-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+    flex: 1;
+  }
+  .preset-list {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+  }
+  .sidebar-footer {
+    flex-shrink: 0;
+  }
+  #components-content {
+    overflow: auto;
+    flex: 1;
+  }
+}
+#live-panel {
+  display: none;
+  background:
+    repeating-linear-gradient(0deg, #ffffff05 0 1px, transparent 1px 3px),
+    linear-gradient(#65564c, #3b302b);
+  border: 4px solid #3b3029;
+  box-shadow:
+    inset 0 0 0 1px #a68f74,
+    0 2px 5px #0005;
+  padding: 20px;
+  color: #e0c8a3;
+  min-height: 350px;
+}
+.application.live .rack-bay {
+  display: none;
+}
+.application.live #live-panel {
+  display: block;
+  flex: 1;
+  overflow: auto;
+}
+.live-heading {
+  font-size: 11px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #392c23;
+  padding-bottom: 15px;
+  box-shadow: 0 1px 0 #967c6144;
+}
+.live-heading > span:last-child {
+  margin-left: auto;
+  font: 7px var(--mono);
+  color: #9f886b;
+}
+.live-led {
+  width: 6px;
+  height: 6px;
+  background: #d23125;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #d23929;
+}
+#live-switches {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 23px;
+  padding: 32px 5px 15px;
+}
+.live-switch {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  min-height: 125px;
+  background: linear-gradient(#3c3027, #2d231e);
+  border: 1px solid #3b2d21;
+  border-top-color: #8b7156;
+  box-shadow:
+    0 3px 3px #0005,
+    inset 0 0 0 1px #d2ad7333;
+  border-radius: 3px;
+  padding: 18px 8px;
+  color: #c6ab85;
+}
+.live-switch > small {
+  position: absolute;
+  left: 8px;
+  top: 7px;
+  font: 7px var(--mono);
+  color: #927657;
+}
+.live-switch > i {
+  width: 5px;
+  height: 10px;
+  border-radius: 2px;
+  background: #6a3328;
+  border: 1px solid #3b1e17;
+}
+.live-switch[aria-pressed="true"] > i {
+  background: #e23f30;
+  box-shadow: 0 0 5px #df3c2b77;
+}
+.live-metal {
+  display: block;
+  width: 29px;
+  height: 29px;
+  border: 4px solid #5d5b52;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 25%, #ede8db, #b2aa99 60%, #6e6b5f);
+  box-shadow:
+    0 3px 3px #0009,
+    inset 0 0 0 1px #d9d2c4;
+}
+.live-switch strong {
+  font-size: 11px;
+  font-weight: 400;
+  text-align: center;
+}
+#live-panel > p {
+  font-size: 10px;
+  color: #b49b7c;
+  text-align: center;
+  margin-top: 25px;
+}
+@media (max-width: 620px) {
+  #live-panel {
+    padding: 18px 13px;
+    min-height: 0;
+  }
+  #live-switches {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding-top: 25px;
+  }
+  .live-heading > span:last-child {
+    font-size: 5px;
+  }
+  .live-switch {
+    min-height: 132px;
+  }
+  .live-switch strong {
+    font-size: 12px;
+  }
+}
+@media (min-width: 851px) {
+  .amp-face {
+    padding-top: 12px;
+    padding-bottom: 13px;
+  }
+  .amp-brand {
+    padding: 7px;
+    margin-bottom: 12px;
+  }
+  .amp-brand h3 {
+    font-size: 28px;
+    margin: 0;
+  }
+  .amp-brand h3 b {
+    font-size: 24px;
+  }
+  .amp-brand p,
+  .amp-brand .model-category {
+    display: none;
+  }
+  .amp-controls .dial-track {
+    width: 46px;
+    height: 46px;
+  }
+  .speaker-grille {
+    height: 146px;
+  }
+  .speaker-cone {
+    width: 150px;
+    height: 150px;
+  }
+}
+@media (max-width: 620px) {
+  .app-header {
+    row-gap: 13px;
+  }
+  .logo {
+    flex: 1 0 165px;
+  }
+  #live-view {
+    order: 0;
+    flex: 0 0 auto;
+  }
+  .help-button {
+    order: 0;
+    flex: 0 0 27px;
+  }
+  .header-meter {
+    flex: 1 1 120px;
+    min-width: 120px;
+  }
+  .master-control {
+    flex: 0 0 135px;
+  }
+}
+.device-panel {
+  padding: 10px 11px;
+  margin: 2px 0 9px;
+  background: #484139;
+  border: 1px solid #8c7d68;
+  border-bottom-color: #30271d;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.device-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #d6b780;
+  font-size: 7px;
+  letter-spacing: 0.5px;
+}
+.device-title strong {
+  font-weight: 400;
+}
+.native-indicator {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #7b6d57;
+}
+.native-indicator.active {
+  background: #ceab5d;
+  box-shadow: 0 0 5px #e4b75b88;
+}
+#native-status {
+  margin-left: auto;
+  color: #ac9a7d;
+  font-size: 6px;
+  letter-spacing: 0;
+}
+.device-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 9px;
+}
+.device-controls label {
+  flex: 1;
+  min-width: 0;
+  font-size: 6px;
+  color: #a79679;
+  display: grid;
+  gap: 4px;
+}
+.device-controls select {
+  width: 100%;
+  min-width: 0;
+  padding: 5px;
+  font-size: 8px;
+  background: #2a241c;
+  color: #cbb18a;
+  border: 1px solid #766044;
+  border-top-color: #261d13;
+  border-radius: 2px;
+}
+.device-controls button {
+  font-size: 8px;
+  min-height: 26px;
+}
+.device-panel > p {
+  font-size: 7px;
+  line-height: 1.6;
+  color: #99896f;
+  margin: 7px 0 0;
+}
+.ir-library,
+.drive-library {
+  border: 1px solid #6e5d45;
+  background: #393027;
+  margin: 10px 2px 0;
+  padding: 0 7px 8px;
+}
+.ir-library .list-heading,
+.drive-library .list-heading {
+  margin: 0 -7px 8px;
+}
+.ir-library > label {
+  font-size: 8px;
+  color: #a99270;
+  display: block;
+  margin-bottom: 6px;
+}
+.ir-library > select {
+  width: 100%;
+  background: #251e17;
+  border: 1px solid #8b6b3c;
+  border-top-color: #1c150d;
+  color: #cfb284;
+  font-size: 9px;
+  padding: 7px;
+  margin-bottom: 7px;
+}
+.ir-library > p,
+.drive-library > p {
+  font-size: 8px;
+  line-height: 1.6;
+  color: #a58e6d;
+}
+.ir-library .steel-button,
+.drive-library .steel-button,
+.drive-library .amber-button {
+  font-size: 8px;
+  min-height: 25px;
+  padding: 5px 7px;
+}
+.drive-library .amber-button {
+  margin: 3px 0;
+}
+.drive-library #drive-status {
+  font-size: 7px;
+  color: #a5895c;
+  display: block;
+  line-height: 1.6;
+  margin-top: 7px;
+}
+.drive-library strong {
+  font-weight: 400;
+  color: #d2af71;
+}
+@media (min-width: 621px) {
+  #browser-content {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #8e744e #4e4437;
+  }
+  .sound-panel {
+    flex: none;
+    min-height: 190px;
+    max-height: 330px;
+    margin-bottom: 12px;
+  }
+  .preset-list {
+    max-height: 285px;
+    flex: 1;
+    min-height: 150px;
+  }
+  .ir-library,
+  .drive-library {
+    flex-shrink: 0;
+  }
+  .preset-info {
+    flex-shrink: 0;
+  }
+}
+@media (max-width: 620px) {
+  .device-title {
+    font-size: 7px;
+    flex-wrap: wrap;
+  }
+  #native-status {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 8px;
+    line-height: 1.6;
+  }
+  .device-controls {
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+  .device-controls label {
+    flex-basis: 40%;
+    font-size: 7px;
+  }
+  .device-controls select {
+    font-size: 10px;
+    padding: 8px;
+  }
+  .device-controls button {
+    font-size: 10px;
+    padding: 8px;
+    min-height: 34px;
+  }
+  .device-panel > p {
+    font-size: 8px;
+  }
+  .ir-library,
+  .drive-library {
+    margin-top: 15px;
+    padding-bottom: 12px;
+  }
+  .ir-library > label,
+  .drive-library > p {
+    font-size: 10px;
+  }
+  .ir-library > select {
+    font-size: 11px;
+    padding: 9px;
+  }
+  .ir-library > p {
+    font-size: 9px;
+  }
+  .ir-library .steel-button,
+  .drive-library .steel-button,
+  .drive-library .amber-button {
+    font-size: 10px;
+    min-height: 32px;
+    padding: 8px;
+  }
+  .drive-library #drive-status {
+    font-size: 9px;
+  }
+}
+@media (max-width: 620px) {
+  .device-controls button {
+    min-height: 44px;
+    font-size: 11px;
+  }
+  .device-controls select {
+    min-height: 40px;
+    font-size: 11px;
+  }
+  .device-panel > p {
+    font-size: 9px;
+    line-height: 1.7;
+  }
+  .preset-toolbar .amber-button {
+    min-height: 35px;
+    font-size: 10px;
+  }
+  .utility-bar .steel-button {
+    min-height: 35px;
+    font-size: 10px;
+  }
+  .module-power {
+    min-width: 29px;
+    min-height: 29px;
+  }
+  .footswitch {
+    min-width: 33px;
+    min-height: 34px;
+  }
+  .module-collapse {
+    min-width: 31px;
+    min-height: 33px;
+  }
+  .dial-label,
+  .pedal .dial-label {
+    font-size: 9px;
+  }
+  .dial-control output,
+  .pedal .dial-control output {
+    font-size: 10px;
+  }
+  .fine-slider,
+  .pedal .fine-slider {
+    height: 23px;
+  }
+  .pedal-category {
+    font-size: 8px;
+  }
+  .ir-library .steel-button,
+  .drive-library .steel-button,
+  .drive-library .amber-button {
+    min-height: 38px;
+    font-size: 11px;
+  }
+}
+/* Independent upper control layer. */
+:root {
+  --dock-height: 153px;
+}
+body {
+  padding-top: calc(var(--dock-height) + 24px);
+}
+.effects-dock {
+  position: fixed;
+  z-index: 100;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 36px);
+  max-width: 1280px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 13px 17px 11px;
+  background:
+    repeating-linear-gradient(0deg, #ffffff04 0 1px, transparent 1px 3px),
+    linear-gradient(#4e4b47, #302c27);
+  border: 1px solid #a79d8b;
+  border-bottom-color: #151310;
+  border-radius: 5px;
+  box-shadow:
+    0 9px 25px #0009,
+    inset 0 1px 0 #dbd3c255;
+}
+.dock-brand {
+  display: grid;
+  gap: 4px;
+  padding-right: 17px;
+  border-right: 1px solid #746654;
+}
+.dock-brand > span {
+  font-size: 25px;
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: -1px;
+  color: #e2d9c7;
+}
+.dock-brand small {
+  font: 6px var(--mono);
+  letter-spacing: 1.5px;
+  color: #b4925e;
+}
+.dock-effects {
+  display: flex;
+  gap: 7px;
+}
+.dock-effect {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 43px;
+  padding: 10px;
+  border: 1px solid #685338;
+  border-top-color: #8f7858;
+  border-radius: 3px;
+  background: linear-gradient(#40382c, #251e16);
+  color: #9c8b70;
+  font-size: 9px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 2px #0005;
+}
+.dock-effect i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4f4030;
+  box-shadow: inset 0 1px 1px #000;
+}
+.dock-effect[aria-pressed="true"] {
+  color: #ffc45a;
+  border-color: #a27834;
+  background: linear-gradient(#544025, #302114);
+}
+.dock-effect[aria-pressed="true"] i {
+  background: #ffbe43;
+  box-shadow: 0 0 7px #f4a52c77;
+}
+.dock-chorus {
+  display: grid;
+  gap: 7px;
+  padding: 0 12px;
+  border-left: 1px solid #655541;
+}
+.dock-chorus label {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font: 6px var(--mono);
+  color: #ac9473;
+  justify-content: space-between;
+}
+.dock-chorus input {
+  height: 10px;
+  width: 70px;
+  accent-color: #cba55e;
+}
+.dock-looper {
+  margin-left: auto;
+  border-left: 1px solid #655541;
+  padding-left: 17px;
+  min-width: 230px;
+}
+.looper-title {
+  font: 8px var(--mono);
+  color: #ddb66e;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.looper-title output {
+  font-size: 8px;
+  color: #e0c797;
+}
+.dock-looper > div {
+  display: flex;
+  gap: 5px;
+  margin-top: 7px;
+}
+.dock-looper button {
+  min-height: 30px;
+  padding: 5px 8px;
+  background: linear-gradient(#5e5547, #3c3226);
+  border: 1px solid #847159;
+  border-bottom-color: #20180f;
+  border-radius: 2px;
+  font: 7px var(--mono);
+  color: #c8b48f;
+}
+.dock-looper button:disabled {
+  opacity: 0.35;
+}
+.dock-looper button[aria-pressed="true"] {
+  color: #ffe2a0;
+  border-color: #dfa13f;
+  background: #5e351a;
+}
+#loop-record[aria-pressed="true"] {
+  color: #ffb2a0;
+  border-color: #e16646;
+  background: #632d23;
+}
+#loop-status {
+  display: block;
+  color: #96846a;
+  font-size: 7px;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.dock-presets {
+  flex-basis: 100%;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 5px;
+  border-top: 1px solid #66543e;
+  padding-top: 9px;
+}
+.dock-presets button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 8px;
+  color: #aa9575;
+  min-height: 27px;
+  background: #2c251d;
+  border: 1px solid #5a4630;
+  border-radius: 2px;
+  padding: 5px 7px;
+  min-width: 0;
+  text-align: left;
+}
+.dock-presets button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dock-presets b {
+  color: #e2b467;
+  font: 8px var(--mono);
+}
+.dock-presets button[aria-pressed="true"] {
+  background: #b58029;
+  color: #241809;
+  border-color: #eabc60;
+}
+.dock-presets button[aria-pressed="true"] b {
+  color: #5e3f13;
+}
+@media (min-width: 621px) {
+  .application {
+    height: min(920px, calc(100dvh - var(--dock-height) - 60px));
+    min-height: 550px;
+  }
+}
+@media (max-width: 1100px) {
+  :root {
+    --dock-height: 187px;
+  }
+  .effects-dock {
+    gap: 10px;
+  }
+  .dock-brand {
+    display: none;
+  }
+  .dock-chorus {
+    padding: 0 7px;
+  }
+  .dock-effect {
+    font-size: 8px;
+    padding: 8px;
+    min-height: 38px;
+  }
+  .dock-effects {
+    gap: 5px;
+  }
+  .dock-looper {
+    padding-left: 10px;
+    min-width: 220px;
+  }
+  .dock-presets {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 750px) {
+  :root {
+    --dock-height: 234px;
+  }
+  .effects-dock {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .dock-effects {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .dock-effect {
+    justify-content: center;
+    font-size: 8px;
+    padding: 9px 6px;
+  }
+  .dock-chorus {
+    border-left: 0;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    display: grid;
+    gap: 18px;
+    padding: 0;
+  }
+  .dock-chorus label {
+    font-size: 7px;
+    gap: 10px;
+  }
+  .dock-chorus input {
+    width: 100%;
+    min-width: 45px;
+    height: 15px;
+  }
+  .dock-looper {
+    flex-basis: 100%;
+    margin: 0;
+    padding: 0;
+    border-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 13px;
+    align-items: center;
+    min-width: 0;
+  }
+  .looper-title {
+    flex: 1;
+    font-size: 8px;
+    min-width: 120px;
+    gap: 10px;
+  }
+  .dock-looper > div {
+    margin: 0;
+    flex: 1;
+    justify-content: flex-end;
+  }
+  .dock-looper button {
+    min-height: 32px;
+    font-size: 7px;
+    padding: 5px 8px;
+  }
+  #loop-status {
+    flex-basis: 100%;
+    font-size: 7px;
+    margin: 0;
+  }
+  .dock-presets {
+    gap: 4px;
+    padding-top: 8px;
+  }
+  .dock-presets button {
+    font-size: 7px;
+    min-height: 27px;
+    gap: 5px;
+    padding: 4px 6px;
+  }
+}
+@media (max-width: 620px) {
+  .effects-dock {
+    top: 6px;
+    width: calc(100% - 12px);
+    padding: 10px;
+  }
+  .application {
+    margin-top: 0;
+  }
+  .dock-effect {
+    min-height: 39px;
+    font-size: 8px;
+  }
+  .dock-looper {
+    display: block;
+  }
+  .looper-title {
+    font-size: 8px;
+  }
+  .dock-looper > div {
+    justify-content: stretch;
+    margin-top: 6px;
+    gap: 5px;
+  }
+  .dock-looper button {
+    flex: 1;
+    min-height: 34px;
+    font-size: 8px;
+    padding: 5px 6px;
+  }
+  #loop-status {
+    margin-top: 5px;
+  }
+  .dock-presets {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .dock-presets button {
+    min-height: 29px;
+    font-size: 7px;
+  }
+  .dock-presets b {
+    font-size: 9px;
+  }
+}
+.dock-modes {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  background: #282019;
+  border: 1px solid #675035;
+  border-radius: 3px;
+}
+.dock-modes button {
+  min-height: 32px;
+  padding: 7px 9px;
+  font: 8px var(--mono);
+  color: #a38a68;
+  border-radius: 2px;
+}
+.dock-modes button[aria-pressed="true"] {
+  background: linear-gradient(#d7a44c, #a2722a);
+  color: #2f210e;
+  box-shadow: inset 0 1px 0 #f9d79766;
+}
+.dock-tempo {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px;
+  padding-left: 12px;
+  border-left: 1px solid #655541;
+}
+.dock-tempo label {
+  font: 7px var(--mono);
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  color: #b49a72;
+}
+.dock-tempo input {
+  width: 44px;
+  border: 1px solid #78603e;
+  background: #211a12;
+  color: #f0bf6b;
+  padding: 4px;
+  font: 9px var(--mono);
+}
+.dock-tempo button {
+  font: 7px var(--mono);
+  background: #463522;
+  color: #c6a572;
+  border: 1px solid #78603e;
+  border-radius: 2px;
+  padding: 5px 7px;
+}
+.dock-tempo #delay-sync {
+  grid-column: 1/-1;
+}
+.dock-tempo #delay-sync[aria-pressed="true"] {
+  background: #956220;
+  color: #ffe1a1;
+  border-color: #d5a558;
+}
+.amp-panel[data-model="acoustic"] .amp-face {
+  background:
+    repeating-linear-gradient(90deg, #ffffff05 0 1px, transparent 1px 4px),
+    linear-gradient(100deg, #4b3422, #2d241a);
+}
+.amp-panel[data-model="acoustic"] .amp-brand {
+  background: repeating-linear-gradient(0deg, #b7a57955 0 1px, #54442c 1px 3px);
+}
+@media (max-width: 1100px) {
+  .dock-modes button {
+    font-size: 7px;
+    padding: 6px 8px;
+  }
+  .dock-tempo {
+    padding-left: 7px;
+  }
+  .dock-brand {
+    display: none;
+  }
+}
+@media (max-width: 750px) {
+  .dock-modes {
+    margin-right: auto;
+  }
+  .dock-tempo {
+    display: flex;
+    align-items: center;
+    border-left: 0;
+    margin-left: auto;
+    padding: 0;
+    gap: 5px;
+  }
+  .dock-tempo input {
+    width: 42px;
+  }
+  .dock-effects {
+    flex-basis: 100%;
+    order: 2;
+  }
+  .dock-chorus {
+    order: 3;
+  }
+  .dock-looper {
+    order: 4;
+  }
+  .dock-presets {
+    order: 5;
+  }
+}
+
+</style>
   </head>
   <body>
+    <section class="effects-dock" aria-label="Barra superior de efeitos">
+      <div class="dock-brand"><span>RIG</span><small>FX CONTROL</small></div>
+      <div class="dock-modes" role="group" aria-label="Modo do instrumento">
+        <button id="mode-guitar" aria-pressed="true">GUITARRA</button
+        ><button id="mode-acoustic" aria-pressed="false">VIOLÃO</button>
+      </div>
+      <div class="dock-effects">
+        <button class="dock-effect" data-dock-effect="1" aria-pressed="true">
+          <i></i>OVERDRIVE</button
+        ><button class="dock-effect" data-dock-effect="3" aria-pressed="true">
+          <i></i>REVERB</button
+        ><button class="dock-effect" data-dock-effect="2" aria-pressed="true">
+          <i></i>DELAY</button
+        ><button class="dock-effect" id="chorus-toggle" aria-pressed="false">
+          <i></i>CHORUS
+        </button>
+      </div>
+      <div class="dock-chorus">
+        <label for="chorus-rate"
+          >RATE
+          <input
+            id="chorus-rate"
+            aria-label="Velocidade do chorus"
+            type="range"
+            min="0"
+            max="10"
+            step="0.1"
+            value="3" /></label
+        ><label for="chorus-depth"
+          >DEPTH
+          <input
+            id="chorus-depth"
+            aria-label="Profundidade do chorus"
+            type="range"
+            min="0"
+            max="10"
+            step="0.1"
+            value="4"
+        /></label>
+      </div>
+      <div class="dock-tempo">
+        <label
+          >BPM
+          <input
+            id="delay-bpm"
+            type="number"
+            min="45"
+            max="240"
+            value="120"
+            aria-label="BPM do delay" /></label
+        ><button id="delay-tap">TAP</button
+        ><button
+          id="delay-sync"
+          aria-pressed="false"
+          title="Delay em colcheia pontuada"
+        >
+          SYNC ♪.
+        </button>
+      </div>
+      <div class="dock-looper">
+        <span class="looper-title"
+          >LOOPER <output id="loop-time">00:00 / 00:30</output></span
+        >
+        <div>
+          <button id="loop-record" aria-pressed="false">● REC</button
+          ><button id="loop-play" disabled>▶ PLAY</button
+          ><button id="loop-overdub" aria-pressed="false" disabled>
+            ＋ DUB</button
+          ><button id="loop-stop" disabled>■ STOP</button
+          ><button id="loop-clear" disabled aria-label="Apagar loop">×</button>
+        </div>
+        <span id="loop-status" role="status" aria-live="polite"
+          >Loop de até 30 s · em memória</span
+        >
+      </div>
+    </section>
     <div class="application">
       <header class="app-header">
-        <a class="logo" href="/" aria-label="RIG Studio início"
+        <a class="logo" href="#studio-section" aria-label="RIG Studio início"
           ><span class="logo-emblem">≋</span
           ><strong>Rig<span>Studio</span></strong></a
         ><button id="live-view" class="steel-button" aria-pressed="false">
@@ -85,6 +3357,9 @@
                 <span>003</span> American Collection</button
               ><button class="bank" data-bank="modern">
                 <span>004</span> Modern High Gain
+              </button>
+              <button class="bank acoustic-bank" data-bank="acoustic">
+                <span>005</span> Acoustic Collection
               </button>
             </section>
             <section class="sound-panel">
@@ -261,6 +3536,7 @@
                       <option value="british">British 800</option>
                       <option value="american">American 65</option>
                       <option value="modern">Modern 515</option>
+                      <option value="acoustic">Acoustic Body</option>
                     </select></label
                   >
                   <div id="amp-controls" class="amp-controls"></div>
@@ -390,7 +3666,1654 @@
       </p>
       <button id="close-help" class="amber-button">Começar</button>
     </dialog>
-    <script src="/library.js"></script>
-    <script src="/app.js"></script>
+    <script>
+window.RigFactoryPresets = [{"name": "California Sunset", "tag": "BRITISH · CRUNCH", "description": "Um clássico britânico, com calor e personalidade.", "model": "british", "values": [6.5, 5, 7, 6, 5.5, 7.5], "favorite": true}, {"name": "Midnight Glass", "tag": "AMERICAN · CLEAN", "description": "Notas abertas, brilho suave e espaço para respirar.", "model": "american", "values": [2, 5, 4, 7, 6, 6], "favorite": true}, {"name": "Desert Highway", "tag": "BRITISH · DRIVE", "description": "Textura crua e médios presentes para riffs de estrada.", "model": "british", "values": [8, 6, 7, 5, 4, 7]}, {"name": "Velvet Room", "tag": "AMERICAN · AMBIENT", "description": "Um som macio, envolvente e cheio de espaço.", "model": "american", "values": [2.5, 6, 5, 4, 3, 6.5], "favorite": true}, {"name": "Electric Avenue", "tag": "BRITISH · BRIGHT", "description": "Ataque definido e um brilho que atravessa a mix.", "model": "british", "values": [5, 4, 6, 8, 7, 6]}, {"name": "After Hours", "tag": "MODERN · HIGH GAIN", "description": "Graves firmes, sustain longo e distorção intensa.", "model": "modern", "values": [9, 7, 5, 4, 3, 7]}, {"name": "Glass Clean", "tag": "AMERICAN · CLEAN", "description": "Ponto de partida inspirado em Clean de estúdio. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Clean de estúdio", "song": null, "official": false}, "model": "american", "values": [1.8, 5, 4.5, 6.5, 5, 7], "pedals": [{"on": false, "values": [4, 5]}, {"on": false, "values": [3, 5]}, {"on": false, "values": [3, 1.8]}, {"on": true, "values": [3, 2]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 0, "favorite": true}, {"name": "The Edge", "tag": "AMERICAN · CLEAN", "description": "Ponto de partida inspirado em U2 / The Edge — Where the Streets Have No Name. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "U2 / The Edge", "song": "Where the Streets Have No Name", "official": false}, "model": "american", "values": [3, 4.5, 6, 6.5, 6, 6], "pedals": [{"on": true, "values": [4, 5]}, {"on": false, "values": [3, 5]}, {"on": true, "values": [4.8, 4.2]}, {"on": true, "values": [6, 2]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 0, "favorite": false, "delaySync": {"on": true, "bpm": 120}, "chorus": {"on": true, "rate": 1.2, "depth": 2}}, {"name": "The Black Strat", "tag": "BRITISH · DRIVE", "description": "Ponto de partida inspirado em Pink Floyd / David Gilmour — Comfortably Numb. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Pink Floyd / David Gilmour", "song": "Comfortably Numb", "official": false}, "model": "british", "values": [5.5, 5, 7, 5, 5, 7], "pedals": [{"on": true, "values": [6, 6]}, {"on": true, "values": [5, 5]}, {"on": true, "values": [5.3, 3]}, {"on": true, "values": [6, 3]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": true, "chorus": {"on": true, "rate": 1.8, "depth": 3.5}}, {"name": "Shine Clean", "tag": "AMERICAN · CLEAN", "description": "Ponto de partida inspirado em Pink Floyd / David Gilmour — Shine On You Crazy Diamond. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Pink Floyd / David Gilmour", "song": "Shine On You Crazy Diamond", "official": false}, "model": "american", "values": [2.4, 5, 5.5, 6, 5.5, 7], "pedals": [{"on": true, "values": [4, 5]}, {"on": false, "values": [3, 5]}, {"on": true, "values": [4, 2.5]}, {"on": true, "values": [6, 2]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Appetite Tone", "tag": "BRITISH · DRIVE", "description": "Ponto de partida inspirado em Guns N’ Roses / Slash — Sweet Child O’ Mine. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Guns N’ Roses / Slash", "song": "Sweet Child O’ Mine", "official": false}, "model": "british", "values": [7.5, 5, 8, 6, 6, 7], "pedals": [{"on": true, "values": [4, 5]}, {"on": true, "values": [5, 5]}, {"on": true, "values": [3, 2]}, {"on": false, "values": [6, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": true}, {"name": "Black Rhythm", "tag": "MODERN · DRIVE", "description": "Ponto de partida inspirado em Metallica — Enter Sandman. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Metallica", "song": "Enter Sandman", "official": false}, "model": "modern", "values": [8, 7, 3, 6.5, 6, 6.5], "pedals": [{"on": false, "values": [4, 5]}, {"on": true, "values": [5, 5]}, {"on": false, "values": [3, 0]}, {"on": false, "values": [3, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Puppet Rhythm", "tag": "MODERN · DRIVE", "description": "Ponto de partida inspirado em Metallica — Master of Puppets. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Metallica", "song": "Master of Puppets", "official": false}, "model": "modern", "values": [8.5, 6, 2.5, 7, 6.5, 6], "pedals": [{"on": false, "values": [4, 5]}, {"on": true, "values": [5, 5]}, {"on": false, "values": [3, 0]}, {"on": false, "values": [3, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Back in Crunch", "tag": "BRITISH · DRIVE", "description": "Ponto de partida inspirado em AC/DC / Angus Young — Back in Black. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "AC/DC / Angus Young", "song": "Back in Black", "official": false}, "model": "british", "values": [6, 5, 7, 6.5, 6, 7], "pedals": [{"on": false, "values": [4, 5]}, {"on": false, "values": [5, 5]}, {"on": false, "values": [3, 0]}, {"on": false, "values": [3, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Little Wing Glass", "tag": "AMERICAN · DRIVE", "description": "Ponto de partida inspirado em Jimi Hendrix — Little Wing. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Jimi Hendrix", "song": "Little Wing", "official": false}, "model": "american", "values": [4, 5.5, 6.5, 5.5, 5, 7], "pedals": [{"on": true, "values": [4, 5]}, {"on": true, "values": [3, 5]}, {"on": false, "values": [3, 2]}, {"on": true, "values": [3, 2]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Texas Flood", "tag": "AMERICAN · DRIVE", "description": "Ponto de partida inspirado em Stevie Ray Vaughan — Pride and Joy. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Stevie Ray Vaughan", "song": "Pride and Joy", "official": false}, "model": "american", "values": [5, 6, 6, 6, 6, 7], "pedals": [{"on": false, "values": [4, 5]}, {"on": true, "values": [5, 5]}, {"on": false, "values": [2, 1.5]}, {"on": true, "values": [3, 2]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Brown Sound", "tag": "BRITISH · DRIVE", "description": "Ponto de partida inspirado em Van Halen / Eddie Van Halen — Eruption. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Van Halen / Eddie Van Halen", "song": "Eruption", "official": false}, "model": "british", "values": [8.5, 5.5, 7, 6, 6, 6.5], "pedals": [{"on": true, "values": [4, 5]}, {"on": true, "values": [5, 5]}, {"on": true, "values": [2.5, 2]}, {"on": true, "values": [6, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Teenage Fuzz", "tag": "MODERN · DRIVE", "description": "Ponto de partida inspirado em Nirvana / Kurt Cobain — Smells Like Teen Spirit. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Nirvana / Kurt Cobain", "song": "Smells Like Teen Spirit", "official": false}, "model": "modern", "values": [8, 6, 5.5, 7, 5.5, 6.5], "pedals": [{"on": false, "values": [4, 5]}, {"on": true, "values": [5, 5]}, {"on": false, "values": [3, 0]}, {"on": false, "values": [3, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Purple Rain Space", "tag": "AMERICAN · DRIVE", "description": "Ponto de partida inspirado em Prince — Purple Rain. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Prince", "song": "Purple Rain", "official": false}, "model": "american", "values": [4, 5, 6, 6.5, 5, 7], "pedals": [{"on": true, "values": [4, 5]}, {"on": true, "values": [3, 5]}, {"on": true, "values": [5, 3]}, {"on": true, "values": [6, 2]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Sultans of Swing", "tag": "AMERICAN · CLEAN", "description": "Ponto de partida inspirado em Dire Straits / Mark Knopfler — Sultans of Swing. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Dire Straits / Mark Knopfler", "song": "Sultans of Swing", "official": false}, "model": "american", "values": [2.8, 4.5, 6, 6.5, 5.5, 7], "pedals": [{"on": true, "values": [4, 5]}, {"on": false, "values": [3, 5]}, {"on": false, "values": [2, 1.2]}, {"on": true, "values": [3, 2]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Sabbath Weight", "tag": "BRITISH · DRIVE", "description": "Ponto de partida inspirado em Black Sabbath / Tony Iommi — Iron Man. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Black Sabbath / Tony Iommi", "song": "Iron Man", "official": false}, "model": "british", "values": [8, 7, 7.5, 5.5, 5, 6.5], "pedals": [{"on": false, "values": [4, 5]}, {"on": true, "values": [5, 5]}, {"on": false, "values": [3, 0]}, {"on": false, "values": [3, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Seven Nation", "tag": "MODERN · DRIVE", "description": "Ponto de partida inspirado em The White Stripes / Jack White — Seven Nation Army. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "The White Stripes / Jack White", "song": "Seven Nation Army", "official": false}, "model": "modern", "values": [7, 7, 6, 4.5, 4, 6], "pedals": [{"on": false, "values": [4, 5]}, {"on": true, "values": [5, 5]}, {"on": false, "values": [3, 0]}, {"on": false, "values": [3, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Red Special", "tag": "BRITISH · DRIVE", "description": "Ponto de partida inspirado em Queen / Brian May — Bohemian Rhapsody. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Queen / Brian May", "song": "Bohemian Rhapsody", "official": false}, "model": "british", "values": [7, 5, 8, 6, 7, 6.5], "pedals": [{"on": true, "values": [4, 5]}, {"on": true, "values": [6, 6.5]}, {"on": true, "values": [3.5, 2.5]}, {"on": true, "values": [6, 2]}], "irId": "studio-reference.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Ambient Horizon", "tag": "AMERICAN · CLEAN", "description": "Ponto de partida inspirado em Ambient / worship. Ajuste à sua guitarra; não é preset oficial ou reprodução exata.", "inspiration": {"artist": "Ambient / worship", "song": null, "official": false}, "model": "american", "values": [2.5, 4.5, 5, 6, 5, 7], "pedals": [{"on": true, "values": [4, 5]}, {"on": false, "values": [3, 5]}, {"on": true, "values": [7, 5]}, {"on": true, "values": [6, 4]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 0, "favorite": false}, {"name": "Woman Tone", "tag": "BRITISH · WARM LEAD", "description": "Perfil inspirado em Eric Clapton na fase Cream: médios aveludados e agudos contidos. Experimente o captador do braço e feche a tonalidade da guitarra. Não é um preset oficial.", "inspiration": {"artist": "Eric Clapton / Cream", "official": false}, "model": "british", "values": [6.5, 6, 8, 1.5, 1.5, 7], "pedals": [{"on": true, "values": [4, 5]}, {"on": true, "values": [4, 1.5]}, {"on": false, "values": [3, 2]}, {"on": true, "values": [3, 1.5]}], "irId": "warm-vintage.wav", "master": 55, "microphone": 1}, {"name": "Acoustic · Martin", "tag": "ACOUSTIC · MARTIN", "description": "Graves encorpados e agudos suaves. Perfil de EQ e ambiência inspirado; filtro sintético original, não IR ou modelo oficial da marca.", "inspiration": {"brand": "Martin", "official": false}, "model": "acoustic", "values": [0, 6.2, 5, 5.5, 4.5, 7], "pedals": [{"on": true, "values": [2, 3]}, {"on": false, "values": [0, 5]}, {"on": false, "values": [3, 2]}, {"on": true, "values": [4, 1.8]}], "irId": "acoustic-body.wav", "master": 55, "microphone": 0}, {"name": "Acoustic · Taylor", "tag": "ACOUSTIC · TAYLOR", "description": "Definição e brilho nas cordas. Perfil de EQ e ambiência inspirado; filtro sintético original, não IR ou modelo oficial da marca.", "inspiration": {"brand": "Taylor", "official": false}, "model": "acoustic", "values": [0, 4.8, 5.5, 7, 6, 7], "pedals": [{"on": true, "values": [2, 3]}, {"on": false, "values": [0, 5]}, {"on": false, "values": [3, 2]}, {"on": true, "values": [4, 1.8]}], "irId": "acoustic-body.wav", "master": 55, "microphone": 0}, {"name": "Acoustic · Gibson", "tag": "ACOUSTIC · GIBSON", "description": "Médios amadeirados e calor. Perfil de EQ e ambiência inspirado; filtro sintético original, não IR ou modelo oficial da marca.", "inspiration": {"brand": "Gibson", "official": false}, "model": "acoustic", "values": [0, 6, 6.5, 4.8, 4, 7], "pedals": [{"on": true, "values": [2, 3]}, {"on": false, "values": [0, 5]}, {"on": false, "values": [3, 2]}, {"on": true, "values": [4, 1.8]}], "irId": "acoustic-body.wav", "master": 55, "microphone": 0}, {"name": "Acoustic · Yamaha", "tag": "ACOUSTIC · YAMAHA", "description": "Equilíbrio para acompanhamento. Perfil de EQ e ambiência inspirado; filtro sintético original, não IR ou modelo oficial da marca.", "inspiration": {"brand": "Yamaha", "official": false}, "model": "acoustic", "values": [0, 5.2, 5.2, 6, 5.3, 7], "pedals": [{"on": true, "values": [2, 3]}, {"on": false, "values": [0, 5]}, {"on": false, "values": [3, 2]}, {"on": true, "values": [4, 1.8]}], "irId": "acoustic-body.wav", "master": 55, "microphone": 0}, {"name": "Acoustic · Fender", "tag": "ACOUSTIC · FENDER", "description": "Ataque claro e médios presentes. Perfil de EQ e ambiência inspirado; filtro sintético original, não IR ou modelo oficial da marca.", "inspiration": {"brand": "Fender", "official": false}, "model": "acoustic", "values": [0, 4.5, 6, 6.5, 5.5, 7], "pedals": [{"on": true, "values": [2, 3]}, {"on": false, "values": [0, 5]}, {"on": false, "values": [3, 2]}, {"on": true, "values": [4, 1.8]}], "irId": "acoustic-body.wav", "master": 55, "microphone": 0}, {"name": "Acoustic · Takamine", "tag": "ACOUSTIC · TAKAMINE", "description": "Clareza para o violão no palco. Perfil de EQ e ambiência inspirado; filtro sintético original, não IR ou modelo oficial da marca.", "inspiration": {"brand": "Takamine", "official": false}, "model": "acoustic", "values": [0, 5.5, 4.8, 6.5, 6, 7], "pedals": [{"on": true, "values": [2, 3]}, {"on": false, "values": [0, 5]}, {"on": false, "values": [3, 2]}, {"on": true, "values": [4, 1.8]}], "irId": "acoustic-body.wav", "master": 55, "microphone": 0}, {"name": "Acoustic Studio", "tag": "ACOUSTIC · STUDIO", "description": "Perfil acústico original com ambiência curta para acompanhamento.", "inspiration": {"official": false}, "model": "acoustic", "values": [0, 6.2, 5, 5.5, 4.5, 7], "pedals": [{"on": true, "values": [3, 4]}, {"on": false, "values": [0, 5]}, {"on": false, "values": [5, 3]}, {"on": true, "values": [3, 1.5]}], "irId": "acoustic-body.wav", "master": 55, "microphone": 0}, {"name": "Acoustic Ambient", "tag": "ACOUSTIC · AMBIENT", "description": "Perfil acústico original com ambiência ampla e delay suave.", "inspiration": {"official": false}, "model": "acoustic", "values": [0, 6.2, 5, 5.5, 4.5, 7], "pedals": [{"on": true, "values": [3, 4]}, {"on": false, "values": [0, 5]}, {"on": true, "values": [5, 3]}, {"on": true, "values": [7, 4]}], "irId": "acoustic-body.wav", "master": 55, "microphone": 0}];
+window.RigCabinetIrs = [{"id": "studio-reference.wav", "name": "Studio Reference 4×12", "source": "Original synthetic FIR, not a measured cabinet", "license": "CC0-1.0", "sampleRate": 48000, "samples": 1024, "base64": "UklGRiQIAABXQVZFZm10IBAAAAABAAEAgLsAAAB3AQACABAAZGF0YQAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAABAAEAAAD///////8AAAEAAgABAAAA///+//7/AAACAAMAAgD///3//P/+/wEABAAEAAIA/v/7//v//v8DAAcABwACAPv/9//4////BwAMAAkAAAD2//H/9v8CAA8AEwAMAPv/6//n//P/CQAdACEADwDv/9T/0v/w/x8ARQBEABIAwf+A/4P/7f+1AKYBcALIAooCygHNAOr/aP9c/6v/FgBhAGgANADp/7X/sf/b/xYAQABCAB4A7P/I/8T/3/8LADIASQBPAE4ATwBTAFUASAAqAAAA3P/N/9r//P8eAC0AIgADAOP/1v/i/wAAHgAoABoA+//h/9r/6/8JACEAIwAOAPH/3v/j//z/GQAjAA4A3v+p/4v/k/+///n/JQAxABsA9v/a/9j/7/8QACYAIwAKAOv/2v/h//v/GAAmABwAAADl/9v/6P8EAB0AJAAUAPj/4f/d/+//DAAgACEADQDx/9//4f/3/xIAIgAdAAYA7P/e/+b//v8WACEAFwD//+j/4f/s/wMAFwAcABEAAAD4/wEAGAAwADkAKwAKAOf/1f/e//r/GQAoAB4AAgDl/9n/5f8BAB0AJgAYAPv/4f/b/+z/CQAhACQAEQDz/97/3v/z/xAAIwAhAAoA7f/c/+L/+v8WACUAHAACAOf/2//n/wIAHAAkABYA+v/i/9z/7f8JACAAIwAQAPP/3v/f//T/EAAjACAACQDs/9z/4v/7/xcAJAAbAAEA5v/c/+j/AwAcACQAFQD6/+L/3f/u/woAIAAiAA8A8v/e/9//9f8RACMAHwAIAOz/3f/j//z/FwAkABoAAADm/9z/6f8EABwAIwAUAPn/4v/e/+//CwAgACEADgDy/9//4P/2/xIAIgAeAAcA6//d/+T//f8XACMAGQD//+b/3f/q/wQAHAAjABMA+P/i/97/8P8LACAAIAANAPH/3//h//f/EgAiAB0ABgDr/97/5v/+/xgAIgAYAP7/5v/e/+v/BQAcACEAEgD3/+L/4P/x/wwAHwAfAAsA8f/g/+P/+P8SACEAGwAFAOv/3//n////FwAhABYA/v/m/9//7P8GABwAIAARAPf/4//h//P/DAAeAB0ACgDx/+H/5P/5/xIAIAAaAAQA6//g/+n/AAAXACAAFQD9/+f/4f/u/wYAGwAeAA8A9v/k/+P/9P8NAB0AHAAJAPH/4v/m//r/EgAeABgAAwDs/+L/6v8BABYAHgATAPz/6P/j//D/BwAaABwADgD2/+X/5f/1/wwAHAAaAAgA8f/k/+j/+/8RAB0AFgACAOz/5P/s/wEAFQAcABEA/P/p/+X/8f8HABgAGgAMAPb/5//n//f/DAAaABgABgDx/+b/6v/8/xEAGwAUAAEA7f/m/+7/AgAUABoADwD7/+r/5//z/wcAFwAYAAoA9v/o/+n/+P8MABgAFQAFAPL/6P/s//3/EAAYABIAAADv/+j/8P8CABMAGAANAPv/7P/p//X/BwAVABYACQD3/+r/7P/5/wsAFgATAAQA8//q/+///v8PABYAEAD///D/6v/y/wMAEQAVAAwA+//u/+z/9v8HABMAEwAHAPf/7P/u//v/CwAUABEAAwD0/+z/8f///w0AFAANAP//8f/t//T/AwAQABMACgD7//D/7v/4/wcAEQARAAYA+P/v//D//P8KABEADgACAPX/7//z/wAADAARAAsA///z/+//9v8DAA4AEAAIAPv/8v/x//n/BgAPAA4ABQD5//H/8//9/wkADwAMAAIA9v/x//X/AAALAA8ACgD///X/8v/4/wMADAAOAAcA/P/0//P/+/8GAA0ADAAEAPn/8//1//7/CAANAAoAAQD3//P/9/8AAAkADAAIAP7/9v/0//n/AwAKAAsABQD8//X/9f/8/wUACwAKAAMA+v/1//f//v8HAAsACAABAPn/9v/5/wEACAAKAAYA/v/4//b/+/8DAAgACQAEAP3/9//3//3/BAAJAAgAAgD7//f/+f///wUACQAGAAAA+v/4//r/AQAGAAgABQD///n/+P/8/wIABwAHAAMA/f/5//n//v8DAAcABgABAPz/+f/7////BAAHAAUAAAD7//r//P8BAAUABgADAP//+//6//3/AgAFAAUAAgD+//v/+//+/wMABQAEAAEA/f/7//z/AAADAAUAAwAAAPz/+//9/wEABAAEAAIA///8//z//v8BAAQABAABAP7//P/8////AgAEAAMAAQD+//z//f8AAAIABAACAAAA/f/9//7/AQADAAMAAgD///3//f///wEAAwADAAEA///9//7///8BAAMAAgAAAP7//v/+/wAAAgACAAIAAAD+//7///8AAAIAAgABAP///v/+////AQACAAIAAQD///7///8AAAEAAgABAAAA////////AAABAAEAAQAAAP///////wAAAQABAAEAAAD/////AAAAAAEAAQAAAAAA/////wAAAQABAAEAAAD///////8AAAEAAQAAAAAA/////wAAAAABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="}, {"id": "warm-vintage.wav", "name": "Warm Vintage 1×12", "source": "Original synthetic FIR, not a measured cabinet", "license": "CC0-1.0", "sampleRate": 48000, "samples": 1024, "base64": "UklGRiQIAABXQVZFZm10IBAAAAABAAEAgLsAAAB3AQACABAAZGF0YQAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAEAAQABAAEAAAD//////v//////AAABAAIAAgACAAAA///9//3//f/+/wEAAwAEAAUAAwABAP7/+//5//r//P8AAAUACAAJAAcAAwD9//f/8//0//j/AAAIABAAEwAQAAcA+//v/+b/5P/s//z/EAAiAC0AKgAYAPn/1f+2/6j/tf/k/zQAnAAPAXoByQHtAd8BoAE6Ab8AQwDc/5f/ff+L/7f/8f8pAE8AXABOACsA/f/S/7T/rf+8/9//DQA9AGQAfQCFAH4AbQBXAEIAMgAnAB8AGQASAAgA/P/w/+f/4//n//P/AgARABwAHwAaAAwA+v/q/9//3v/n//j/DAAeACkAKAAbAAQA5//K/7T/p/+l/63/vf/P/+D/7v/2//r//P/8//7/AQAGAAoADAAKAAYA///4//P/8f/0//v/AwALABAAEAALAAMA+v/y/+//8f/3/wAACQAQABIADgAGAPz/9P/u/+//9P/9/wcADwASABEACgAAAPf/8P/t//D/9/8AAAkAEQAVABYAFQAUABUAFwAaAB4AIAAeABkADwACAPb/7f/p/+z/9P8AAAsAEwAWABIACQD9//L/7P/r//H/+/8HABAAFQATAAsAAAD1/+3/6//v//n/BAAOABQAFAANAAMA9//v/+v/7v/3/wIADQATABQADwAFAPn/8P/s/+3/9f8AAAsAEgAUABAABwD7//H/7P/t//P//v8JABEAFAARAAkA/f/z/+3/7P/y//z/BwAQABQAEgAKAP//9f/t/+z/8f/6/wUADwAUABMADAABAPb/7v/s//D/+P8EAA4AEwATAA0AAwD4/+//7P/v//f/AgAMABMAFAAOAAUA+v/x/+z/7v/1/wAACwASABQADwAGAPv/8v/t/+3/9P/+/wkAEQAUABAACAD9//P/7f/t//P//P8HABAAEwARAAkA///1/+7/7f/y//v/BgAPABMAEgALAAEA9v/v/+3/8f/5/wQADQASABIADAACAPj/8P/t//D/+P8CAAwAEgASAA0ABAD6//H/7v/w//f/AQAKABEAEgAOAAUA+//z/+7/7//1////CQAQABIADwAHAP3/9P/v/+//9P/9/wcADwASAA8ACAD+//X/8P/v//T//P8GAA4AEQAQAAkAAAD3//D/7//z//v/BAAMABEAEAAKAAEA+P/x/+//8v/5/wMACwAQABAACwADAPr/8//w//L/+P8BAAoADwAQAAwABAD7//T/8P/y//f/AAAIAA4AEAAMAAUA/f/1//H/8f/3//7/BwANAA8ADQAGAP7/9v/y//H/9v/9/wUADAAPAA0ABwD///j/8//y//X//P8EAAsADgANAAgAAAD5//P/8v/1//v/AwAKAA0ADQAJAAIA+v/0//L/9f/6/wIACQANAA0ACQADAPv/9f/z//T/+f8AAAcADAANAAoABAD9//f/9P/0//n///8GAAsADAAKAAQA/v/4//T/9P/4//7/BQAKAAwACgAFAP//+f/1//X/+P/+/wQACQALAAoABgAAAPr/9v/1//j//f8DAAgACwAKAAYAAQD7//f/9f/3//z/AgAHAAoACgAHAAEA/P/4//b/9//8/wEABgAJAAoABwACAP3/+P/2//f/+/8AAAUACQAJAAcAAwD+//n/9//4//v///8EAAgACQAHAAMA/v/6//j/+P/6////AwAHAAgABwAEAP//+//4//j/+v/+/wMABgAIAAcABAAAAPz/+f/4//r//v8CAAUABwAHAAQAAAD8//r/+f/6//3/AQAFAAcABwAEAAEA/f/6//n/+v/9/wEABAAGAAYABQABAP7/+//6//r//f8AAAMABgAGAAUAAgD+//z/+v/7//3/AAADAAUABgAEAAIA///8//v/+//9////AgAEAAUABAACAP///f/7//v//f///wIABAAFAAQAAgAAAP3//P/7//3///8BAAMABAAEAAIAAAD+//z//P/9////AQADAAQABAACAAAA/v/9//z//f///wEAAgAEAAMAAgABAP///f/9//3//v8AAAIAAwADAAIAAQD///3//f/9//7/AAACAAMAAwACAAEA///+//3//f/+/wAAAQACAAMAAgABAP///v/9//7///8AAAEAAgACAAIAAQAAAP7//v/+////AAABAAIAAgACAAEAAAD///7//v///wAAAQACAAIAAgABAAAA///+//7///8AAAEAAQACAAEAAQAAAP/////+////AAABAAEAAQABAAEAAAD//////////wAAAAABAAEAAQABAAAA//////////8AAAAAAQABAAEAAQAAAP//////////AAAAAAEAAQABAAAAAAD//////////wAAAAABAAEAAQAAAAAAAAD///////8AAAAAAQABAAEAAAAAAAAA/////wAAAAAAAAEAAQABAAAAAAAAAP////8AAAAAAAAAAAEAAQAAAAAAAAD/////AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="}, {"id": "bright-open.wav", "name": "Bright Open 2×12", "source": "Original synthetic FIR, not a measured cabinet", "license": "CC0-1.0", "sampleRate": 48000, "samples": 1024, "base64": "UklGRiQIAABXQVZFZm10IBAAAAABAAEAgLsAAAB3AQACABAAZGF0YQAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA/////wAAAQABAAAA////////AQACAAEA///+////AQADAAIA///9//7/AQAEAAMA///8//z/AQAFAAUA///6//r/AAAHAAgAAQD4//f//v8JAAwAAwD2//L/+/8LABIABwDz/+r/9v8OABwADwDx/93/6v8RAC4AIADu/8P/z/8UAFgAUgDr/23/Xf8XAHkB3gKBA/4CmgEbAED/S//k/2wAfAAeALb/nv/f/zYAUwAjANj/t//a/x0AQgArAO7/w//N/wIAOABPAEgAOgA5AD0AMQANAOP/0v/o/xMALAAcAPT/1//h/wcAJwAhAP3/3P/d/wAAIgAkAAQA4P/a//n/HwAnAAoA4f/W//T/IAAwAA8A0P+j/6f/1P8DABMAAgDs/+v/AgAYABYA///n/+j/AAAZABkAAQDo/+b//f8XABsABQDq/+T/+f8VAB0ACgDt/+P/9P8RAB4ADgDw/+L/8P8OAB4AEQD0/+L/7f8KAB0AFQD4/+P/6v8GAB0AGAD8/+T/5/8DABwAGgD9/+L/5f8JADEAPQAjAPr/5P/w/w0AHQAQAPP/4//w/wwAHQASAPb/4//t/wkAHAAVAPn/5P/q/wUAGwAYAP3/5v/n/wAAGQAaAAIA6P/l//z/FwAcAAYA6//k//j/FAAdAAsA7v/j//P/EAAdAA8A8v/j/+//DAAdABIA9v/j/+z/CAAcABYA+//l/+n/AwAbABkA///n/+b///8YABsABADp/+T/+v8VABwACADs/+P/9v8SAB0ADADw/+P/8v8OAB0AEAD0/+P/7v8KABwAFAD4/+T/6/8FABsAFwD9/+b/6P8BABkAGQABAOj/5v/8/xcAGwAGAOv/5P/4/xMAHAAKAO7/5P/0/xAAHQAOAPL/5P/w/wwAHAASAPb/5P/t/wgAGwAVAPv/5v/q/wMAGQAXAP//6P/n////FwAZAAMA6v/m//r/FAAbAAgA7f/l//b/EQAbAAwA8f/k//L/DQAbAA8A9f/l/+//CQAbABMA+f/m/+z/BQAZABUA/f/o/+r/AQAXABcAAQDq/+j//f8VABkABQDt/+b/+f8SABoACQDw/+b/9f8OABoADQDz/+b/8f8LABoAEAD3/+f/7v8HABkAEwD7/+j/7P8DABcAFQD//+r/6v///xUAFwADAO3/6f/7/xIAGAAHAO//6P/3/w8AGAAKAPP/6P/0/wwAGAAOAPb/6P/x/wgAFwAQAPr/6f/u/wQAFgATAP7/6//s/wEAFAAUAAEA7f/r//3/EgAWAAUA8P/q//r/DwAWAAgA8v/q//b/DAAWAAsA9f/q//T/CQAWAA4A+f/r//H/BgAVABAA/P/s/+//AgATABIA///u/+7///8RABMAAwDw/+3//P8PABQABgDz/+z/+f8MABQACQD1/+z/9v8JABQACwD4/+3/9P8GABMADQD7/+7/8v8DABIADwD+/+//8P8AABAAEAABAPH/7//+/w4AEQAEAPP/7//7/wwAEQAGAPX/7//4/wkAEQAJAPj/7//2/wcAEQALAPv/8P/0/wQAEAAMAP3/8f/z/wIADgANAAAA8v/y////DQAOAAIA9P/x//3/CwAPAAQA9v/x//r/CQAPAAcA+P/x//n/BwAOAAgA+v/y//f/BQAOAAoA/f/z//b/AgANAAsA///0//X/AAALAAwAAQD1//T//v8KAAwAAwD3//T//P8IAAwABQD5//T/+/8GAAwABgD7//T/+f8FAAwABwD8//X/+P8DAAsACAD+//b/9/8BAAoACQAAAPf/9////wkACgACAPj/9v/+/wcACgADAPr/9v/8/wYACgAEAPv/9v/7/wQACQAFAPz/9//6/wMACQAGAP7/+P/5/wEACAAHAP//+P/5/wAABwAHAAEA+f/5////BgAIAAIA+//4//7/BQAHAAMA/P/5//3/BAAHAAQA/f/5//z/AwAHAAUA/v/5//v/AQAGAAUA///6//v/AAAGAAUAAAD7//v///8FAAYAAQD8//r///8EAAYAAgD8//v//v8DAAUAAwD9//v//f8CAAUAAwD+//v//f8BAAUAAwD///z//P8BAAQABAAAAPz//P8AAAQABAAAAP3//P///wMABAABAP3//P///wIABAACAP7//P/+/wIAAwACAP///f/+/wEAAwACAP///f/+/wEAAwACAAAA/f/+/wAAAgACAAAA/v/+/wAAAgACAAEA/v/+////AgACAAEA///+////AQACAAEA///+////AQACAAEA///+////AAACAAEAAAD+////AAABAAEAAAD/////AAABAAEAAAD/////AAABAAEAAAD///////8BAAEAAQD///////8AAAEAAQAAAP////8AAAEAAQAAAP////8AAAEAAQAAAP////8AAAEAAQAAAAAA//8AAAAAAQAAAAAA//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="}, {"id": "acoustic-body.wav", "name": "Acoustic Body · filtro sintético", "source": "Original synthetic FIR, not a measured cabinet", "license": "CC0-1.0", "sampleRate": 48000, "samples": 1024, "base64": "UklGRiQIAABXQVZFZm10IBAAAAABAAEAgLsAAAB3AQACABAAZGF0YQAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAQAAAP//AAABAAAA//8AAAEAAAD+/wAAAgAAAP7/AAADAAAA/f8AAAMAAAD8/wAABAAAAPv/AAAGAAAA+v8AAAcAAAD4/wAACQAAAPb///8MAAEA8////w8AAQDv////FAABAOr///8aAAEA4v/+/yMAAgDW//7/MwACAMH//f9RAAMAk//9/58ABADs/vz/XwNsBYID+//I/gYAwgD5/3D/CAB0APb/nf8LAFcA8/+y/xAARwDs/77/GQA9AN7/xv8xADcArP/L/wQB0QEMAc//pf8vADgA0v/X/ywAIADV/+b/KgAWANb/7f8pABAA2P/y/ycADADZ//f/JgAHANr//P8mAP//2/8HACUA7//c/ygAJABl/87+RP8kAEoA3f/N/yMAKQDd/93/IwAfAN3/4/8iABsA3v/m/yIAGQDe/+j/IgAXAN7/6v8iABYA3v/q/yIAFQDf/+v/IQAVAN//6/8hABUA3//r/yEAFQDf/+v/IQAVAN//6v8hABYA3//p/yEAGQDf/+X/IQAgAN//1v8hAF8AXABAACEA9f/f/wEAIQAEAN//+v8hAAgA3//3/yEACgDf//b/IQALAN//9f8hAAsA3//0/yEADADf//T/IQAMAN//9P8hAAwA3//0/yEADADf//T/IQANAN//8/8hAA0A3//z/yEADQDf//P/IQANAN//8/8hAA0A3//z/yEADQDg//P/IAANAOD/8/8gAA0A4P/z/yAADQDg//P/IAANAOD/8/8gAA0A4P/z/yAADQDg//P/IAANAOD/8/8gAA0A4P/z/yAADQDg//P/IAANAOD/8/8gAA0A4P/z/yAADQDg//P/IAANAOD/8/8gAA0A4P/z/yAADQDg//P/IAANAOD/8/8gAA0A4P/z/yAADQDh//P/HwANAOH/8/8fAA0A4f/z/x8ADQDh//P/HwANAOH/8/8fAA0A4f/z/x8ADQDh//P/HwANAOH/8/8fAA0A4f/z/x8ADQDi//P/HgANAOL/8/8eAA0A4v/z/x4ADQDi//P/HgANAOL/8/8eAA0A4v/0/x4ADADi//T/HgAMAOP/9P8dAAwA4//0/x0ADADj//T/HQAMAOP/9P8dAAwA4//0/x0ADADj//T/HAAMAOT/9P8cAAwA5P/0/xwADADk//T/HAAMAOT/9P8cAAwA5P/0/xsADADl//T/GwAMAOX/9P8bAAwA5f/1/xsACwDl//X/GwALAOX/9f8aAAsA5v/1/xoACwDm//X/GgALAOb/9f8aAAsA5v/1/xkACwDn//X/GQALAOf/9f8ZAAsA5//1/xkACwDn//X/GQALAOj/9f8YAAoA6P/2/xgACgDo//b/GAAKAOj/9v8YAAoA6f/2/xcACgDp//b/FwAKAOn/9v8XAAoA6f/2/xYACgDq//b/FgAKAOr/9v8WAAoA6v/2/xYACQDq//f/FQAJAOv/9/8VAAkA6//3/xUACQDr//f/FQAJAOz/9/8UAAkA7P/3/xQACQDs//f/FAAJAOz/9/8TAAkA7f/3/xMACADt//j/EwAIAO3/+P8TAAgA7v/4/xIACADu//j/EgAIAO7/+P8SAAgA7v/4/xEACADv//j/EQAIAO//+P8RAAgA7//5/xEABwDw//n/EAAHAPD/+f8QAAcA8P/5/xAABwDw//n/DwAHAPH/+f8PAAcA8f/5/w8ABwDx//n/DwAHAPL/+f8OAAYA8v/6/w4ABgDy//r/DgAGAPL/+v8NAAYA8//6/w0ABgDz//r/DQAGAPP/+v8NAAYA9P/6/wwABgD0//r/DAAGAPT/+/8MAAUA9P/7/wsABQD1//v/CwAFAPX/+/8LAAUA9f/7/wsABQD1//v/CgAFAPb/+/8KAAUA9v/7/woABQD2//v/CgAFAPb//P8JAAQA9//8/wkABAD3//z/CQAEAPf//P8JAAQA9//8/wgABAD4//z/CAAEAPj//P8IAAQA+P/8/wgABAD4//z/BwAEAPn//P8HAAMA+f/9/wcAAwD5//3/BwADAPn//f8HAAMA+v/9/wYAAwD6//3/BgADAPr//f8GAAMA+v/9/wYAAwD6//3/BQADAPv//f8FAAMA+//9/wUAAgD7//7/BQACAPv//v8FAAIA+//+/wQAAgD8//7/BAACAPz//v8EAAIA/P/+/wQAAgD8//7/BAACAPz//v8EAAIA/P/+/wMAAgD9//7/AwACAP3//v8DAAIA/f/+/wMAAgD9////AwABAP3///8DAAEA/f///wMAAQD+////AgABAP7///8CAAEA/v///wIAAQD+////AgABAP7///8CAAEA/v///wIAAQD+////AgABAP7///8CAAEA/////wEAAQD/////AQABAP////8BAAEA/////wEAAQD/////AQABAP////8BAAEA/////wEAAAD//wAAAQAAAP//AAABAAAA//8AAAEAAAD//wAAAQAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="}];
+
+</script>
+    <script>
+window.RigLooperCode = String.raw`
+class RigLoopProcessor extends AudioWorkletProcessor {
+ constructor(){super();this.data=new Float32Array(Math.ceil(sampleRate*30));this.mode=0;this.length=0;this.cursor=0;this.tick=0;this.port.onmessage=event=>this.command(event.data);}
+ command(value){if(value===1){this.length=this.cursor=0;this.mode=1;}else if(value===4){this.length=this.cursor=0;this.mode=0;}else if(value===3){this.mode=this.length?3:0;this.cursor=0;}else if(value===2&&this.length){this.mode=2;this.cursor=0;}else if(value===5&&this.length)this.mode=5;this.report();}
+ report(){this.port.postMessage({state:this.mode,frames:this.length,position:this.mode===1?this.length:this.cursor,sampleRate});}
+ process(inputs,outputs){const input=inputs[0]?.[0],output=outputs[0]?.[0];if(!output)return true;
+ for(let i=0;i<output.length;i++){const x=Number.isFinite(input?.[i])?input[i]:0;let y=x;if(this.mode===1){this.data[this.length++]=Math.max(-1,Math.min(1,x));if(this.length===this.data.length){this.mode=2;this.cursor=0;this.report();}}else if((this.mode===2||this.mode===5)&&this.length){const old=this.data[this.cursor];if(this.mode===5)this.data[this.cursor]=Math.max(-1,Math.min(1,old*.98+x));y+=old;this.cursor=(this.cursor+1)%this.length;}output[i]=y;}
+ this.tick+=output.length;if(this.tick>=sampleRate/8){this.tick=0;this.report();}return true;}
+}
+registerProcessor('rig-loop',RigLoopProcessor);
+`;
+
+</script>
+    <script>
+const $ = (s) => document.querySelector(s);
+const factory = window.RigFactoryPresets || [];
+const factoryCount = factory.length;
+const native = window.RigAndroid || null;
+let nativeLive = false,
+  nativeLibraryReady = false,
+  selectedIrId = "studio-reference.wav",
+  nativeIrs = [],
+  webImportedIrs = [];
+let chorusState = { on: false, rate: 3, depth: 4 };
+let delaySync = { on: false, bpm: 120 },
+  instrumentMode = "guitar";
+let tapTimes = [];
+let loopInfo = { state: 0, frames: 0, position: 0, sampleRate: 48000 };
+let looperReady = null;
+const validValues = (v) =>
+  Array.isArray(v) &&
+  v.length === 6 &&
+  v.every((n) => Number.isFinite(n) && n >= 0 && n <= 10);
+let userPresets = [];
+try {
+  const raw = JSON.parse(
+    localStorage.getItem("rig-user-presets") ||
+      (native ? native.getSavedPresets() : "[]") ||
+      "[]",
+  );
+  if (Array.isArray(raw))
+    userPresets = raw.filter(
+      (p) => p && typeof p.name === "string" && validValues(p.values),
+    );
+} catch {}
+const presets = [...factory, ...userPresets];
+try {
+  const saved = JSON.parse(localStorage.getItem("rig-favorites") || "null");
+  if (Array.isArray(saved))
+    presets.forEach((p) => (p.favorite = saved.includes(p.name)));
+} catch {}
+const pedalDefs = [
+  {
+    id: "comp",
+    name: "Squeeze",
+    subtitle: "COMPRESSOR",
+    caption: "A LITTLE MORE SUSTAIN",
+    params: ["SUSTAIN", "AMOUNT"],
+    help: ["Sustentação das notas", "Intensidade da compressão"],
+    values: [4, 6],
+    on: true,
+  },
+  {
+    id: "drive",
+    name: "Rust",
+    subtitle: "OVERDRIVE",
+    caption: "WARM. ROUGH. BEAUTIFUL.",
+    params: ["DRIVE", "TONE"],
+    help: ["Intensidade da distorção", "Brilho do overdrive"],
+    values: [3.5, 5],
+    on: true,
+  },
+  {
+    id: "tape",
+    name: "Daytrip",
+    subtitle: "TAPE ECHO",
+    caption: "LET IT COME BACK AROUND",
+    params: ["TIME", "REPEAT"],
+    help: ["Intervalo entre ecos", "Quantidade de repetições"],
+    values: [4, 3],
+    on: true,
+  },
+  {
+    id: "room",
+    name: "Somewhere",
+    subtitle: "ROOM REVERB",
+    caption: "A LITTLE ROOM TO BREATHE",
+    params: ["SPACE", "MIX"],
+    help: ["Tamanho do ambiente", "Quantidade de reverberação"],
+    values: [5, 2.5],
+    on: true,
+  },
+];
+let current = 0,
+  values = [],
+  pedalState = [],
+  ampOn = true,
+  bypassed = false,
+  model = "british",
+  filter = "all",
+  bankFilter = "all",
+  toastTimer,
+  comparing = false,
+  comparisonSnapshot = null;
+const collapsedModules = [true, true, false, false];
+function toast(message) {
+  $("#toast").textContent = message;
+  $("#toast").classList.add("visible");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("#toast").classList.remove("visible"), 3500);
+}
+function store(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    toast(
+      "Não foi possível salvar no navegador. Libere o armazenamento e tente novamente.",
+    );
+    return false;
+  }
+}
+function renderPresets() {
+  const q = $("#search").value.trim().toLocaleLowerCase("pt-BR");
+  const list = $("#presets");
+  list.replaceChildren();
+  $("#preset-total").textContent = String(presets.length).padStart(2, "0");
+  let count = 0;
+  presets.forEach((p, i) => {
+    if (
+      (p.model === "acoustic") !== (instrumentMode === "acoustic") ||
+      !p.name.toLocaleLowerCase("pt-BR").includes(q) ||
+      (filter === "favorites" && !p.favorite) ||
+      (bankFilter !== "all" && (p.model || "british") !== bankFilter)
+    )
+      return;
+    count++;
+    const button = document.createElement("button");
+    button.className = `preset-item ${i === current ? "selected" : ""}`;
+    button.setAttribute("aria-pressed", String(i === current));
+    const number = document.createElement("span");
+    number.className = "preset-index";
+    number.textContent = String(i + 1).padStart(2, "0");
+    const text = document.createElement("span");
+    const title = document.createElement("strong");
+    title.textContent = p.name;
+    const tag = document.createElement("small");
+    tag.textContent = typeof p.tag === "string" ? p.tag : "CUSTOM · USER";
+    text.append(title, tag);
+    const arrow = document.createElement("span");
+    arrow.className = "preset-arrow";
+    arrow.innerHTML =
+      '<svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 14 14 4M4 4h10v10"/></svg>';
+    button.append(number, text, arrow);
+    button.addEventListener("click", () => loadPreset(i));
+    list.append(button);
+  });
+  if (!count) {
+    const empty = document.createElement("p");
+    empty.className = "empty";
+    empty.textContent =
+      "Nenhum timbre aqui. Tente outro nome ou selecione Todos.";
+    list.append(empty);
+  }
+}
+function dial({ id, label, help, value, onChange, pedal = false }) {
+  const el = document.createElement("div");
+  el.className = "dial-control";
+  el.innerHTML = `<div class="dial-track"><div class="dial-face"></div><input id="${id}" type="range" min="0" max="10" step="0.1"></div><label class="dial-label" for="${id}">${label}</label><output for="${id}"></output><input class="fine-slider" type="range" min="0" max="10" step="0.1">`;
+  const inputs = el.querySelectorAll("input");
+  inputs[0].setAttribute("aria-label", help);
+  inputs[1].setAttribute("aria-label", `${help} · ajuste fino`);
+  inputs.forEach((input) => {
+    input.value = value;
+    input.title = help;
+    input.addEventListener("input", () => {
+      const n = Number(input.value);
+      inputs.forEach((item) => {
+        item.value = n;
+        item.setAttribute("aria-valuetext", `${n.toFixed(1)} de 10`);
+      });
+      el.querySelector("output").value = n.toFixed(1);
+      el.querySelector(".dial-face").style.transform =
+        `rotate(${-135 + n * 27}deg)`;
+      el.querySelector(".dial-track").style.setProperty(
+        "--angle",
+        `${n * 27}deg`,
+      );
+      onChange(n);
+      updateAudio();
+    });
+  });
+  el.querySelector("output").value = Number(value).toFixed(1);
+  el.querySelector(".dial-face").style.transform =
+    `rotate(${-135 + value * 27}deg)`;
+  el.querySelector(".dial-track").style.setProperty(
+    "--angle",
+    `${value * 27}deg`,
+  );
+  return el;
+}
+function renderControls() {
+  const labels = ["Ganho", "Graves", "Médios", "Agudos", "Presença", "Volume"];
+  const helps = [
+    "Distorção do amplificador",
+    "Graves",
+    "Médios",
+    "Agudos",
+    "Presença",
+    "Volume do amplificador",
+  ];
+  $("#amp-controls").replaceChildren(
+    ...values.map((value, i) =>
+      dial({
+        id: `amp-${i}`,
+        label: labels[i],
+        help: helps[i],
+        value,
+        onChange: (n) => (values[i] = n),
+      }),
+    ),
+  );
+}
+function renderPedals() {
+  const categories = ["COMPRESSOR", "OVERDRIVE", "TAPE DELAY", "STUDIO REVERB"];
+  const descriptions = [
+    "Dynamic sustain processor",
+    "Vintage drive circuit",
+    "Analog-style tape echoes",
+    "Room ambience processor",
+  ];
+  const parameters = [
+    ["SUSTAIN", "AMOUNT"],
+    ["DRIVE", "TONE"],
+    ["TIME", "FEEDBACK"],
+    ["SPACE", "MIX"],
+  ];
+  $("#pre-effects").replaceChildren();
+  $("#pedals").replaceChildren();
+  pedalDefs.forEach((p, i) => {
+    const state = pedalState[i],
+      el = document.createElement("article");
+    el.className = `pedal ${p.id} ${state.on ? "" : "disabled"} ${collapsedModules[i] ? "collapsed" : ""}`;
+    el.innerHTML = `<div class="pedal-row"><button class="footswitch" aria-pressed="${state.on}"><span class="power-led"></span></button><div class="pedal-identity"><h3 class="pedal-name">${p.name}</h3><span class="pedal-category">${categories[i]}</span><p class="pedal-description">${descriptions[i]}</p></div><div class="pedal-dials" id="pedal-body-${i}"></div><span class="pedal-number">FX 0${i + 1}</span><button class="module-collapse" aria-label="${collapsedModules[i] ? "Expandir" : "Recolher"} ${p.name}" aria-expanded="${!collapsedModules[i]}" aria-controls="pedal-body-${i}">${collapsedModules[i] ? "+" : "−"}</button></div>`;
+    p.params.forEach((_, j) =>
+      el.querySelector(".pedal-dials").append(
+        dial({
+          id: `pedal-${i}-${j}`,
+          label: parameters[i][j],
+          help: p.help[j],
+          value: state.values[j],
+          onChange: (n) => (state.values[j] = n),
+          pedal: true,
+        }),
+      ),
+    );
+    const button = el.querySelector(".footswitch");
+    button.setAttribute(
+      "aria-label",
+      `${state.on ? "Desligar" : "Ligar"} ${p.name}`,
+    );
+    button.addEventListener("click", () => {
+      state.on = !state.on;
+      renderPedals();
+      renderComponents();
+      connectAudio();
+      updateAudio();
+    });
+    el.querySelector(".module-collapse").addEventListener("click", () => {
+      collapsedModules[i] = !collapsedModules[i];
+      renderPedals();
+    });
+    $(i < 2 ? "#pre-effects" : "#pedals").append(el);
+  });
+}
+function renderComponents() {
+  renderLive();
+  const list = $("#component-list");
+  list.replaceChildren();
+  const entries = [
+    {
+      name: "Signature Amplifier",
+      on: ampOn,
+      action: () => $("#amp-power").click(),
+    },
+    ...pedalDefs.map((p, i) => ({
+      name: p.name,
+      on: pedalState[i].on,
+      action: () => {
+        pedalState[i].on = !pedalState[i].on;
+        renderPedals();
+        renderComponents();
+        connectAudio();
+        updateAudio();
+      },
+    })),
+  ];
+  entries.forEach((entry) => {
+    const button = document.createElement("button");
+    button.className = "component-button";
+    button.setAttribute("aria-pressed", String(entry.on));
+    const lamp = document.createElement("i");
+    const name = document.createTextNode(entry.name);
+    const state = document.createElement("span");
+    state.textContent = entry.on ? "ON" : "OFF";
+    button.append(lamp, name, state);
+    button.addEventListener("click", entry.action);
+    list.append(button);
+  });
+}
+function renderPower() {
+  $("#amp-power").setAttribute("aria-pressed", String(ampOn));
+  $("#amp-power").setAttribute(
+    "aria-label",
+    `${ampOn ? "Desligar" : "Ligar"} amplificador`,
+  );
+  $("#amp-led").classList.toggle("off", !ampOn);
+  $("#amp-state-label").textContent = ampOn ? "Ligado" : "Desligado";
+}
+function renderFavorite() {
+  $("#favorite").setAttribute(
+    "aria-pressed",
+    String(Boolean(presets[current].favorite)),
+  );
+  $("#favorite").setAttribute(
+    "aria-label",
+    presets[current].favorite
+      ? "Remover dos favoritos"
+      : "Adicionar aos favoritos",
+  );
+}
+function renderModel() {
+  const names = {
+    british: ["BRITISH", "800"],
+    american: ["AMERICAN", "65"],
+    modern: ["MODERN", "515"],
+    acoustic: ["ACOUSTIC", "BODY"],
+  };
+  $("#amp-model").value = model;
+  $("#model-heading").textContent = names[model][0];
+  $("#model-number").textContent = names[model][1];
+  const copy = {
+    british: ["BRITISH COLLECTION", "Ataque marcante. Personalidade de sobra."],
+    american: ["AMERICAN COLLECTION", "Som aberto. Clareza em cada nota."],
+    modern: ["MODERN COLLECTION", "Mais peso. Mais sustain. Sem limites."],
+    acoustic: [
+      "ACOUSTIC COLLECTION",
+      "Corpo, definição e ambiência para o violão.",
+    ],
+  };
+  $(".amp-panel").dataset.model = model;
+  $(".cabinet-module").dataset.model = model;
+  $(".model-category").textContent = copy[model][0];
+  $("#model-description").textContent = copy[model][1];
+}
+function loadPreset(index, preserveComparison = false) {
+  if (!preserveComparison) {
+    comparing = false;
+    comparisonSnapshot = null;
+    $("#compare").setAttribute("aria-pressed", "false");
+    $("#compare").textContent = "Comparar";
+  }
+  current = index;
+  $(".preset-slot").textContent = String(index + 1).padStart(3, "0");
+  const p = presets[index];
+  instrumentMode = p.model === "acoustic" ? "acoustic" : "guitar";
+  delaySync = {
+    on: p.delaySync?.on === true,
+    bpm: Number.isFinite(p.delaySync?.bpm)
+      ? Math.max(45, Math.min(240, p.delaySync.bpm))
+      : 120,
+  };
+  chorusState = {
+    on: p.chorus?.on === true,
+    rate: Number.isFinite(p.chorus?.rate)
+      ? Math.max(0, Math.min(10, p.chorus.rate))
+      : 3,
+    depth: Number.isFinite(p.chorus?.depth)
+      ? Math.max(0, Math.min(10, p.chorus.depth))
+      : 4,
+  };
+  values = [...p.values];
+  model = ["british", "american", "modern", "acoustic"].includes(p.model)
+    ? p.model
+    : "british";
+  ampOn = p.ampOn !== false;
+  pedalState = pedalDefs.map((d, i) => {
+    const saved = p.pedals?.[i];
+    return {
+      on: typeof saved?.on === "boolean" ? saved.on : d.on,
+      values:
+        Array.isArray(saved?.values) &&
+        saved.values.length === 2 &&
+        saved.values.every((v) => Number.isFinite(v) && v >= 0 && v <= 10)
+          ? [...saved.values]
+          : [...d.values],
+    };
+  });
+  $("#master").value = Number.isFinite(p.master)
+    ? Math.max(0, Math.min(100, p.master))
+    : 60;
+  $("#master-value").value = `${$("#master").value}%`;
+  $("#mic").value = String([0, 1, 2].includes(p.microphone) ? p.microphone : 0);
+  $("#preset-title").textContent = p.name;
+  $("#preset-description").textContent =
+    typeof p.description === "string"
+      ? p.description
+      : "Sua combinação. Sua assinatura sonora.";
+  renderPresets();
+  renderControls();
+  renderPedals();
+  renderPower();
+  selectedIrId = typeof p.irId === "string" ? p.irId : "studio-reference.wav";
+  renderIrList();
+  if (native && nativeLibraryReady) native.selectIr(selectedIrId);
+  applyWebIr();
+  renderFavorite();
+  renderModel();
+  renderComponents();
+  connectAudio();
+  updateAudio();
+}
+$("#search").addEventListener("input", renderPresets);
+document.querySelectorAll("[data-filter]").forEach((button) =>
+  button.addEventListener("click", () => {
+    filter = button.dataset.filter;
+    document.querySelectorAll("[data-filter]").forEach((b) => {
+      b.classList.toggle("active", b === button);
+      b.setAttribute("aria-pressed", String(b === button));
+    });
+    renderPresets();
+  }),
+);
+$("#favorite").addEventListener("click", () => {
+  presets[current].favorite = !presets[current].favorite;
+  store(
+    "rig-favorites",
+    presets.filter((p) => p.favorite).map((p) => p.name),
+  );
+  renderFavorite();
+  renderPresets();
+});
+$("#amp-power").addEventListener("click", () => {
+  ampOn = !ampOn;
+  renderPower();
+  renderComponents();
+  connectAudio();
+  updateAudio();
+});
+$("#amp-model").addEventListener("change", (e) => {
+  model = e.target.value;
+  renderModel();
+  updateAudio();
+});
+$("#reset").addEventListener("click", () => {
+  loadPreset(current);
+  toast("Ajustes originais do timbre restaurados.");
+});
+$("#global-bypass").addEventListener("click", () => {
+  bypassed = !bypassed;
+  $("#global-bypass").setAttribute("aria-pressed", String(bypassed));
+  $(".rack").classList.toggle("bypassed", bypassed);
+  renderLive();
+  connectAudio();
+  updateAudio();
+  toast(
+    bypassed
+      ? "Bypass ligado: ouvindo o sinal sem efeitos."
+      : "Efeitos ligados novamente.",
+  );
+});
+$("#master").addEventListener("input", () => {
+  $("#master-value").value = `${$("#master").value}%`;
+  updateAudio();
+});
+$("#mic").addEventListener("change", updateAudio);
+$("#save-button").addEventListener("click", () => {
+  $("#preset-name").value = "";
+  $("#save-dialog").showModal();
+});
+$("#cancel-save").addEventListener("click", () => $("#save-dialog").close());
+$("#save-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = $("#preset-name").value.trim();
+  if (!name) {
+    $("#preset-name").setCustomValidity("Dê um nome ao seu timbre.");
+    $("#preset-name").reportValidity();
+    return;
+  }
+  const p = {
+    name,
+    tag: "CUSTOM · USER",
+    description: "Sua combinação. Sua assinatura sonora.",
+    model,
+    values: [...values],
+    pedals: pedalState.map((p) => ({ on: p.on, values: [...p.values] })),
+    ampOn,
+    master: Number($("#master").value),
+    microphone: Number($("#mic").value),
+    irId: selectedIrId,
+    chorus: { ...chorusState },
+    delaySync: { ...delaySync },
+    favorite: true,
+  };
+  if (!store("rig-user-presets", [...presets.slice(factoryCount), p])) return;
+  if (native)
+    native.savePresets(JSON.stringify([...presets.slice(factoryCount), p]));
+  presets.push(p);
+  store(
+    "rig-favorites",
+    presets.filter((p) => p.favorite).map((p) => p.name),
+  );
+  loadPreset(presets.length - 1);
+  $("#save-dialog").close();
+  toast("Timbre salvo no navegador. Pode voltar quando quiser.");
+});
+$("#preset-name").addEventListener("input", (e) =>
+  e.target.setCustomValidity(""),
+);
+$("#help").addEventListener("click", () => $("#help-dialog").showModal());
+$("#close-help").addEventListener("click", () => $("#help-dialog").close());
+// Browser-native preview: a synthesized plucked string, not a sampled guitar or hardware model.
+let audio = null,
+  playing = false,
+  noteTimer = null,
+  meterFrame = null,
+  noteIndex = 0,
+  activeSources = new Set(),
+  importedBuffer = null,
+  importedName = "",
+  loadVersion = 0;
+function makeCurve(drive) {
+  const amount = drive * 35;
+  const curve = new Float32Array(4096);
+  for (let i = 0; i < curve.length; i++) {
+    const x = (i * 2) / (curve.length - 1) - 1;
+    curve[i] = ((Math.PI + amount) * x) / (Math.PI + amount * Math.abs(x));
+  }
+  return curve;
+}
+function initializeAudio() {
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) throw Error("unsupported");
+  const ctx = new Ctx({ latencyHint: "interactive" });
+  const input = ctx.createGain(),
+    comp = ctx.createDynamicsCompressor(),
+    drive = ctx.createWaveShaper(),
+    driveTone = ctx.createBiquadFilter(),
+    amp = ctx.createWaveShaper(),
+    bass = ctx.createBiquadFilter(),
+    mid = ctx.createBiquadFilter(),
+    treble = ctx.createBiquadFilter(),
+    presence = ctx.createBiquadFilter(),
+    cab = ctx.createBiquadFilter(),
+    cabIR = ctx.createConvolver(),
+    ampGain = ctx.createGain(),
+    dryDelay = ctx.createGain(),
+    delay = ctx.createDelay(2),
+    feedback = ctx.createGain(),
+    wetDelay = ctx.createGain(),
+    delayMix = ctx.createGain(),
+    chorusDelay = ctx.createDelay(0.05),
+    chorusLfo = ctx.createOscillator(),
+    chorusDepth = ctx.createGain(),
+    chorusDry = ctx.createGain(),
+    chorusWet = ctx.createGain(),
+    chorusMix = ctx.createGain(),
+    convolver = ctx.createConvolver(),
+    wetRoom = ctx.createGain(),
+    roomMix = ctx.createGain(),
+    master = ctx.createGain(),
+    limiter = ctx.createDynamicsCompressor(),
+    analyser = ctx.createAnalyser();
+  chorusDelay.delayTime.value = 0.012;
+  chorusLfo.frequency.value = 1.05;
+  chorusDepth.gain.value = 0.0019;
+  chorusDry.gain.value = 0.75;
+  chorusWet.gain.value = 0.35;
+  chorusLfo.start();
+  driveTone.type = "lowpass";
+  bass.type = "lowshelf";
+  bass.frequency.value = 160;
+  mid.type = "peaking";
+  mid.frequency.value = 900;
+  mid.Q.value = 0.7;
+  treble.type = "highshelf";
+  treble.frequency.value = 3200;
+  presence.type = "peaking";
+  presence.frequency.value = 4500;
+  cab.type = "lowpass";
+  limiter.threshold.value = -8;
+  limiter.ratio.value = 16;
+  limiter.attack.value = 0.003;
+  analyser.fftSize = 256;
+  cabIR.normalize = false;
+  const impulse = ctx.createBuffer(2, ctx.sampleRate * 2, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) {
+    const data = impulse.getChannelData(c);
+    for (let i = 0; i < data.length; i++)
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / data.length, 3);
+  }
+  convolver.buffer = impulse;
+  audio = {
+    ctx,
+    input,
+    comp,
+    drive,
+    driveTone,
+    amp,
+    bass,
+    mid,
+    treble,
+    presence,
+    cab,
+    cabIR,
+    ampGain,
+    dryDelay,
+    delay,
+    feedback,
+    wetDelay,
+    delayMix,
+    chorusDelay,
+    chorusLfo,
+    chorusDepth,
+    chorusDry,
+    chorusWet,
+    chorusMix,
+    convolver,
+    wetRoom,
+    roomMix,
+    master,
+    limiter,
+    analyser,
+  };
+  applyWebIr();
+  connectAudio();
+  updateAudio();
+}
+function connectAudio() {
+  if (!audio) return;
+  const a = audio;
+  for (const [key, node] of Object.entries(a))
+    if (key !== "ctx" && typeof node.disconnect === "function")
+      node.disconnect();
+  let tail = a.input;
+  const append = (...nodes) => {
+    for (const node of nodes) {
+      tail.connect(node);
+      tail = node;
+    }
+  };
+  a.chorusLfo.connect(a.chorusDepth);
+  a.chorusDepth.connect(a.chorusDelay.delayTime);
+  if (!bypassed) {
+    if (pedalState[0].on) append(a.comp);
+    if (pedalState[1].on) append(a.drive, a.driveTone);
+    if (ampOn)
+      append(
+        a.amp,
+        a.bass,
+        a.mid,
+        a.treble,
+        a.presence,
+        a.cab,
+        a.cabIR,
+        a.ampGain,
+      );
+    if (chorusState.on) {
+      tail.connect(a.chorusDry);
+      a.chorusDry.connect(a.chorusMix);
+      tail.connect(a.chorusDelay);
+      a.chorusDelay.connect(a.chorusWet);
+      a.chorusWet.connect(a.chorusMix);
+      tail = a.chorusMix;
+    }
+    if (pedalState[2].on) {
+      tail.connect(a.dryDelay);
+      a.dryDelay.connect(a.delayMix);
+      tail.connect(a.delay);
+      a.delay.connect(a.feedback);
+      a.feedback.connect(a.delay);
+      a.delay.connect(a.wetDelay);
+      a.wetDelay.connect(a.delayMix);
+      tail = a.delayMix;
+    }
+    if (pedalState[3].on) {
+      tail.connect(a.roomMix);
+      tail.connect(a.convolver);
+      a.convolver.connect(a.wetRoom);
+      a.wetRoom.connect(a.roomMix);
+      tail = a.roomMix;
+    }
+  }
+  if (a.looper) append(a.looper);
+  append(a.master, a.limiter, a.analyser);
+  a.analyser.connect(a.ctx.destination);
+}
+function updateAudio() {
+  renderDock();
+  syncNativeSettings();
+  if (!audio) return;
+  const a = audio,
+    t = a.ctx.currentTime;
+  const smooth = (param, value) => param.setTargetAtTime(value, t, 0.02);
+  smooth(a.chorusLfo.frequency, 0.15 + chorusState.rate * 0.3);
+  smooth(a.chorusDepth.gain, 0.0003 + chorusState.depth * 0.0004);
+  a.comp.threshold.value = -12 - pedalState[0].values[0] * 2;
+  a.comp.ratio.value = 1 + pedalState[0].values[1];
+  a.drive.curve = makeCurve(pedalState[1].values[0] * 0.8);
+  smooth(a.driveTone.frequency, 900 + pedalState[1].values[1] * 650);
+  a.amp.curve = makeCurve(
+    values[0] *
+      { american: 0.2, british: 0.8, modern: 1.5, acoustic: 0 }[model],
+  );
+  smooth(a.bass.gain, (values[1] - 5) * 2);
+  smooth(a.mid.gain, (values[2] - 5) * 2);
+  smooth(a.treble.gain, (values[3] - 5) * 2);
+  smooth(a.presence.gain, (values[4] - 5) * 1.5);
+  smooth(a.ampGain.gain, values[5] / 10);
+  smooth(
+    a.cab.frequency,
+    model === "acoustic" ? 12000 : [6500, 4200, 8000][Number($("#mic").value)],
+  );
+  smooth(
+    a.delay.delayTime,
+    delaySync.on ? 45 / delaySync.bpm : 0.06 + pedalState[2].values[0] * 0.065,
+  );
+  smooth(a.feedback.gain, Math.min(0.7, pedalState[2].values[1] * 0.07));
+  smooth(a.wetDelay.gain, 0.25);
+  smooth(a.dryDelay.gain, 0.8);
+  smooth(
+    a.wetRoom.gain,
+    (pedalState[3].values[1] / 10) *
+      (0.15 + pedalState[3].values[0] / 10) *
+      0.7,
+  );
+  smooth(a.master.gain, (Number($("#master").value) / 100) * 0.4);
+}
+function pluck() {
+  if (!playing) return;
+  const a = audio;
+  const notes = [110, 164.81, 196, 220, 164.81, 146.83, 130.81, 164.81];
+  const f = notes[noteIndex++ % notes.length];
+  const duration = 1.4,
+    length = Math.floor(a.ctx.sampleRate * duration),
+    buffer = a.ctx.createBuffer(1, length, a.ctx.sampleRate),
+    data = buffer.getChannelData(0);
+  for (let i = 0; i < length; i++) {
+    const t = i / a.ctx.sampleRate;
+    let wave = 0;
+    for (let h = 1; h <= 8; h++)
+      wave +=
+        (Math.sin(2 * Math.PI * f * h * t) * Math.exp(-t * (2.8 + h * 0.7))) /
+        (h * 1.3);
+    data[i] = wave * 0.18 * Math.min(1, t / 0.006);
+  }
+  const source = a.ctx.createBufferSource();
+  source.buffer = buffer;
+  source.connect(a.input);
+  activeSources.add(source);
+  source.onended = () => {
+    activeSources.delete(source);
+    source.disconnect();
+  };
+  source.start();
+}
+function drawMeter() {
+  if (!playing && !webLoopActive()) return;
+  const data = new Float32Array(audio.analyser.fftSize);
+  audio.analyser.getFloatTimeDomainData(data);
+  const rms = Math.sqrt(data.reduce((sum, v) => sum + v * v, 0) / data.length);
+  const db = rms > 0 ? 20 * Math.log10(rms) : -Infinity;
+  $("#meter i").style.width =
+    `${Math.max(0, Math.min(100, ((db + 60) / 60) * 100))}%`;
+  $("#meter-value").textContent =
+    Number.isFinite(db) && db > -90 ? `${db.toFixed(1)} dB` : "−∞ dB";
+  $("#output-indicator").classList.toggle("active", rms > 0.001);
+  meterFrame = requestAnimationFrame(drawMeter);
+}
+function stopDemo(stopLoop = false) {
+  if (stopLoop && audio?.looper) {
+    audio.looper.port.postMessage(3);
+    loopInfo.state = loopInfo.frames ? 3 : 0;
+  }
+  playing = false;
+  clearInterval(noteTimer);
+  cancelAnimationFrame(meterFrame);
+  activeSources.forEach((s) => {
+    try {
+      s.stop();
+    } catch {}
+  });
+  activeSources.clear();
+  if (audio && !webLoopActive()) audio.ctx.suspend().catch(() => {});
+  $("#play-demo").classList.remove("playing");
+  $("#play-icon").textContent = "▶";
+  $("#play-text").textContent = "Ouvir timbre";
+  $("#engine-label").textContent = "Experimente seu timbre";
+  $("#engine-description").textContent = importedBuffer
+    ? "Sua gravação pronta para tocar"
+    : "Demo sintetizada · Sem entrada de guitarra";
+  if (importedBuffer) $("#engine-label").textContent = importedName;
+  $("#meter i").style.width = "0";
+  $("#meter-value").textContent = "−∞ dB";
+  $("#output-indicator").classList.remove("active");
+  $("#status-text").textContent = webLoopActive() ? "Looper ativo" : "Pronto";
+  if (webLoopActive()) drawMeter();
+}
+$("#play-demo").addEventListener("click", async () => {
+  if (playing) {
+    stopDemo();
+    return;
+  }
+  if (nativeLive) {
+    toast("Pare a entrada de guitarra antes de ouvir a demo.");
+    return;
+  }
+  const button = $("#play-demo");
+  button.disabled = true;
+  try {
+    if (!audio) initializeAudio();
+    await audio.ctx.resume();
+    playing = true;
+    $("#status-text").textContent = "Reproduzindo";
+    noteIndex = 0;
+    button.classList.add("playing");
+    $("#play-icon").textContent = "■";
+    $("#play-text").textContent = "Parar demo";
+    $("#engine-label").textContent = "Explorando seu timbre";
+    $("#engine-description").textContent =
+      "Sequência sintetizada · Efeitos em tempo real";
+    if (importedBuffer) {
+      const source = audio.ctx.createBufferSource();
+      source.buffer = importedBuffer;
+      source.loop = true;
+      source.connect(audio.input);
+      activeSources.add(source);
+      source.onended = () => {
+        activeSources.delete(source);
+        source.disconnect();
+      };
+      source.start();
+      $("#engine-label").textContent = importedName;
+      $("#engine-description").textContent =
+        "Sua gravação · Reprodução em loop";
+    } else {
+      pluck();
+      noteTimer = setInterval(pluck, 480);
+    }
+    drawMeter();
+  } catch {
+    stopDemo();
+    toast(
+      "Não foi possível iniciar o áudio neste navegador. Você ainda pode ajustar e salvar timbres.",
+    );
+  } finally {
+    button.disabled = false;
+  }
+});
+window.addEventListener("pagehide", () => stopDemo(true));
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && (playing || webLoopActive())) stopDemo(true);
+});
+// Local audio is decoded in memory and is never uploaded.
+$("#audio-file").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const version = ++loadVersion;
+  if (file.size > 10 * 1024 * 1024) {
+    toast("Escolha um arquivo de áudio de até 10 MB.");
+    e.target.value = "";
+    return;
+  }
+  stopDemo();
+  $("#audio-file-label").textContent = "Preparando seu áudio…";
+  try {
+    if (!audio) initializeAudio();
+    const buffer = await audio.ctx.decodeAudioData(await file.arrayBuffer());
+    if (buffer.duration > 120)
+      throw Error("Use uma gravação de até 2 minutos.");
+    if (version !== loadVersion) return;
+    importedBuffer = buffer;
+    importedName = file.name;
+    $("#audio-file-label").textContent = file.name;
+    $("#clear-audio").hidden = false;
+    $("#engine-label").textContent = file.name;
+    $("#engine-description").textContent = "Sua gravação pronta para tocar";
+    toast("Áudio carregado. Clique em Ouvir timbre para experimentar.");
+  } catch {
+    if (version !== loadVersion) return;
+    $("#audio-file-label").textContent =
+      importedName || "Importe uma gravação de guitarra para ouvir os efeitos.";
+    toast(
+      "Não foi possível ler esse áudio. Tente um arquivo WAV ou MP3 válido.",
+    );
+  } finally {
+    e.target.value = "";
+  }
+});
+$("#clear-audio").addEventListener("click", () => {
+  loadVersion++;
+  stopDemo();
+  importedBuffer = null;
+  importedName = "";
+  $("#audio-file-label").textContent =
+    "Importe uma gravação de guitarra para ouvir os efeitos.";
+  $("#clear-audio").hidden = true;
+  $("#engine-label").textContent = "Experimente seu timbre";
+  $("#engine-description").textContent =
+    "Demo sintetizada · Sem entrada de guitarra";
+});
+function renderLive() {
+  const grid = $("#live-switches");
+  if (!grid) return;
+  grid.replaceChildren();
+  const entries = [
+    { name: "Som anterior", action: () => stepPreset(-1) },
+    { name: "Próximo som", action: () => stepPreset(1) },
+    { name: "Amplificador", on: ampOn, action: () => $("#amp-power").click() },
+    ...pedalDefs.map((p, i) => ({
+      name: p.name,
+      on: pedalState[i].on,
+      action: () => {
+        pedalState[i].on = !pedalState[i].on;
+        renderPedals();
+        renderComponents();
+        connectAudio();
+        updateAudio();
+      },
+    })),
+    { name: "Bypass", on: bypassed, action: () => $("#global-bypass").click() },
+  ];
+  entries.forEach((entry, i) => {
+    const button = document.createElement("button");
+    button.className = "live-switch";
+    if (entry.on !== undefined)
+      button.setAttribute("aria-pressed", String(entry.on));
+    const led = document.createElement("i");
+    const metal = document.createElement("span");
+    metal.className = "live-metal";
+    const label = document.createElement("strong");
+    label.textContent = entry.name;
+    const number = document.createElement("small");
+    number.textContent = String(i + 1).padStart(2, "0");
+    button.append(number, led, metal, label);
+    button.addEventListener("click", entry.action);
+    grid.append(button);
+  });
+}
+function showSidebar(components) {
+  $("#browser-content").hidden = components;
+  $("#components-content").hidden = !components;
+  $("#nav-studio").classList.toggle("active", !components);
+  $("#nav-library").classList.toggle("active", components);
+  $("#nav-studio").setAttribute("aria-pressed", String(!components));
+  $("#nav-library").setAttribute("aria-pressed", String(components));
+}
+$("#nav-studio").addEventListener("click", () => showSidebar(false));
+$("#nav-library").addEventListener("click", () => {
+  showSidebar(true);
+  renderComponents();
+});
+$("#live-view").addEventListener("click", () => {
+  const live = $(".application").classList.toggle("live");
+  $("#live-view").setAttribute("aria-pressed", String(live));
+  $("#live-view").textContent = live ? "RACK VIEW" : "LIVE VIEW";
+});
+$("#collapse-all").addEventListener("click", () => {
+  const collapse = collapsedModules.some((v) => !v);
+  collapsedModules.fill(collapse);
+  renderPedals();
+  $("#collapse-all").textContent = collapse ? "+" : "−";
+  $("#collapse-all").setAttribute(
+    "aria-label",
+    collapse ? "Expandir efeitos" : "Recolher efeitos",
+  );
+});
+document.querySelectorAll("[data-bank]").forEach((button) =>
+  button.addEventListener("click", () => {
+    bankFilter = button.dataset.bank;
+    if (bankFilter === "acoustic") instrumentMode = "acoustic";
+    else if (bankFilter !== "all") instrumentMode = "guitar";
+    $("#search").value = "";
+    filter = "all";
+    document
+      .querySelectorAll("[data-bank]")
+      .forEach((b) => b.classList.toggle("selected", b === button));
+    document.querySelectorAll("[data-filter]").forEach((b) => {
+      b.classList.toggle("active", b.dataset.filter === "all");
+      b.setAttribute("aria-pressed", String(b.dataset.filter === "all"));
+    });
+    const index = presets.findIndex(
+      (p) =>
+        (p.model === "acoustic") === (instrumentMode === "acoustic") &&
+        (bankFilter === "all" || (p.model || "british") === bankFilter),
+    );
+    if (index >= 0) loadPreset(index);
+    else renderPresets();
+  }),
+);
+function stepPreset(direction) {
+  const query = $("#search").value.toLocaleLowerCase("pt-BR");
+  const indexes = presets
+    .map((p, i) => ({ p, i }))
+    .filter(
+      ({ p }) =>
+        (p.model === "acoustic") === (instrumentMode === "acoustic") &&
+        (bankFilter === "all" || (p.model || "british") === bankFilter) &&
+        (filter !== "favorites" || p.favorite) &&
+        p.name.toLocaleLowerCase("pt-BR").includes(query),
+    )
+    .map(({ i }) => i);
+  if (!indexes.length) return;
+  const pos = indexes.indexOf(current);
+  loadPreset(indexes[(pos + direction + indexes.length) % indexes.length]);
+}
+$("#previous-preset").addEventListener("click", () => stepPreset(-1));
+$("#next-preset").addEventListener("click", () => stepPreset(1));
+function captureSettings() {
+  return {
+    values: [...values],
+    model,
+    ampOn,
+    pedals: pedalState.map((p) => ({ on: p.on, values: [...p.values] })),
+    master: $("#master").value,
+    microphone: $("#mic").value,
+    irId: selectedIrId,
+    chorus: { ...chorusState },
+    delaySync: { ...delaySync },
+  };
+}
+function applySettings(s) {
+  chorusState = { ...(s.chorus || { on: false, rate: 3, depth: 4 }) };
+  delaySync = { ...(s.delaySync || { on: false, bpm: 120 }) };
+  values = [...s.values];
+  model = s.model;
+  ampOn = s.ampOn;
+  pedalState = s.pedals.map((p) => ({ on: p.on, values: [...p.values] }));
+  $("#master").value = s.master;
+  $("#master-value").value = `${s.master}%`;
+  $("#mic").value = s.microphone;
+  selectedIrId = s.irId || "studio-reference.wav";
+  renderIrList();
+  if (native && nativeLibraryReady) native.selectIr(selectedIrId);
+  applyWebIr();
+  renderControls();
+  renderPedals();
+  renderPower();
+  renderModel();
+  renderComponents();
+  connectAudio();
+  updateAudio();
+}
+$("#compare").addEventListener("click", () => {
+  if (!comparing) {
+    comparisonSnapshot = captureSettings();
+    loadPreset(current, true);
+    comparing = true;
+    $("#compare").textContent = "Original";
+    toast(
+      "Comparação: ouvindo o timbre original. Clique novamente para voltar aos seus ajustes.",
+    );
+  } else {
+    comparing = false;
+    applySettings(comparisonSnapshot);
+    $("#compare").textContent = "Comparar";
+    toast("Seus ajustes restaurados.");
+  }
+  $("#compare").setAttribute("aria-pressed", String(comparing));
+});
+function syncNativeSettings() {
+  if (!native) return;
+  const modelIndex = { british: 0, american: 1, modern: 2, acoustic: 3 }[model];
+  const p = pedalState;
+  if (p.length !== 4) return;
+  native.setSettings(
+    JSON.stringify([
+      ...values,
+      modelIndex,
+      ampOn ? 1 : 0,
+      bypassed ? 1 : 0,
+      Number($("#master").value) / 100,
+      Number($("#mic").value),
+      p[0].on ? 1 : 0,
+      ...p[0].values,
+      p[1].on ? 1 : 0,
+      ...p[1].values,
+      p[2].on ? 1 : 0,
+      ...p[2].values,
+      p[3].on ? 1 : 0,
+      ...p[3].values,
+      -70,
+      chorusState.on ? 1 : 0,
+      chorusState.rate,
+      chorusState.depth,
+      delaySync.on ? 45 / delaySync.bpm : 0,
+    ]),
+  );
+}
+function builtinIrBuffer(item) {
+  const raw = atob(item.base64),
+    data = new DataView(Uint8Array.from(raw, (c) => c.charCodeAt(0)).buffer);
+  const rate = audio.ctx.sampleRate,
+    length = Math.max(1, Math.round((item.samples * rate) / item.sampleRate));
+  const buffer = audio.ctx.createBuffer(1, length, rate);
+  const out = buffer.getChannelData(0);
+  for (let i = 0; i < length; i++) {
+    const position = (i * item.sampleRate) / rate,
+      a = Math.min(item.samples - 1, Math.floor(position)),
+      b = Math.min(item.samples - 1, a + 1),
+      fraction = position - a;
+    out[i] =
+      (data.getInt16(44 + a * 2, true) * (1 - fraction) +
+        data.getInt16(44 + b * 2, true) * fraction) /
+      32768;
+  }
+  return buffer;
+}
+function applyWebIr() {
+  if (!audio) return;
+  const item = (window.RigCabinetIrs || []).find((i) => i.id === selectedIrId);
+  const imported = webImportedIrs.find((i) => i.id === selectedIrId);
+  if (imported?.buffer) audio.cabIR.buffer = imported.buffer;
+  else if (item) audio.cabIR.buffer = builtinIrBuffer(item);
+  else {
+    const identity = audio.ctx.createBuffer(1, 1, audio.ctx.sampleRate);
+    identity.getChannelData(0)[0] = 1;
+    audio.cabIR.buffer = identity;
+  }
+}
+function renderIrList() {
+  const select = $("#cabinet-ir");
+  select.replaceChildren();
+  const entries =
+    native && nativeLibraryReady
+      ? nativeIrs
+      : [...(window.RigCabinetIrs || []), ...webImportedIrs];
+  entries.forEach((item) => {
+    const option = document.createElement("option");
+    option.value = item.id;
+    option.textContent = item.name;
+    select.append(option);
+  });
+  if (entries.some((i) => i.id === selectedIrId)) select.value = selectedIrId;
+  else if (selectedIrId) {
+    const missing = document.createElement("option");
+    missing.value = selectedIrId;
+    missing.textContent = "IR ausente — importe " + selectedIrId;
+    missing.disabled = true;
+    select.append(missing);
+    select.value = selectedIrId;
+  }
+}
+$("#cabinet-ir").addEventListener("change", (e) => {
+  selectedIrId = e.target.value;
+  if (native) native.selectIr(selectedIrId);
+  else applyWebIr();
+  toast("Gabinete IR selecionado.");
+});
+$("#import-ir").addEventListener("click", () => {
+  if (native) native.pickIr();
+  else $("#ir-file").click();
+});
+$("#ir-file").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    if (file.size > 4000000) throw Error("Escolha um IR WAV de até 4 MB.");
+    const raw = await file.arrayBuffer();
+    const bytes = new Uint8Array(raw);
+    if (
+      String.fromCharCode(...bytes.slice(0, 4)) !== "RIFF" ||
+      String.fromCharCode(...bytes.slice(8, 12)) !== "WAVE"
+    )
+      throw Error("Use um IR de gabinete em WAV.");
+    if (!audio) initializeAudio();
+    const decoded = await audio.ctx.decodeAudioData(raw.slice(0));
+    if (decoded.duration > 2)
+      throw Error("Use um IR de gabinete de até 2 segundos.");
+    const length = Math.min(8192, decoded.length);
+    const buffer = audio.ctx.createBuffer(1, length, decoded.sampleRate);
+    const out = buffer.getChannelData(0);
+    for (let c = 0; c < decoded.numberOfChannels; c++) {
+      const source = decoded.getChannelData(c);
+      for (let i = 0; i < length; i++)
+        out[i] += source[i] / decoded.numberOfChannels;
+    }
+    let energy = 0;
+    for (const value of out) energy += Math.abs(value);
+    if (energy < 1e-9) throw Error("O IR está silencioso.");
+    if (energy > 2) for (let i = 0; i < out.length; i++) out[i] *= 2 / energy;
+    const id = "local-" + Date.now() + ".wav";
+    webImportedIrs.push({ id, name: file.name, buffer });
+    selectedIrId = id;
+    renderIrList();
+    applyWebIr();
+    $("#ir-status").textContent =
+      "IR importado nesta sessão (até 8192 amostras). No APK, a biblioteca fica salva.";
+    toast("IR importado para esta sessão.");
+  } catch (error) {
+    toast(error.message || "Não foi possível ler esse IR.");
+  } finally {
+    e.target.value = "";
+  }
+});
+function importPresetArray(items) {
+  if (!Array.isArray(items) || items.length > 500) {
+    toast("Biblioteca inválida. Use uma lista JSON de até 500 presets.");
+    return;
+  }
+  const valid = items.filter(
+    (p) =>
+      p &&
+      typeof p.name === "string" &&
+      p.name.trim() &&
+      p.name.length <= 100 &&
+      validValues(p.values),
+  );
+  if (!valid.length) {
+    toast("Nenhum preset compatível encontrado.");
+    return;
+  }
+  const custom = [...presets.slice(factoryCount), ...valid];
+  if (custom.length > 500) {
+    toast("Limite de 500 presets pessoais atingido.");
+    return;
+  }
+  if (!store("rig-user-presets", custom)) return;
+  presets.push(...valid);
+  if (native) native.savePresets(JSON.stringify(custom));
+  renderPresets();
+  toast(`${valid.length} timbres importados.`);
+}
+function exportPresetFile() {
+  const blob = new Blob(
+    [JSON.stringify(presets.slice(factoryCount), null, 2)],
+    { type: "application/json" },
+  );
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "rig-user-presets.json";
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+$("#connect-drive").addEventListener("click", () => {
+  if (native) native.chooseDriveFolder();
+  else
+    toast("A seleção de pasta do Google Drive fica disponível no APK Android.");
+});
+$("#export-library").addEventListener("click", () => {
+  if (native) native.exportLibrary();
+  else exportPresetFile();
+});
+$("#import-presets").addEventListener("click", () => {
+  if (native) native.importPresets();
+  else $("#presets-file").click();
+});
+$("#presets-file").addEventListener("change", async (e) => {
+  try {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 2000000) throw Error("JSON muito grande.");
+    importPresetArray(JSON.parse(await file.text()));
+  } catch {
+    toast("Use um arquivo JSON de presets compatível.");
+  } finally {
+    e.target.value = "";
+  }
+});
+$("#connect-guitar").addEventListener("click", () => {
+  if (!native) {
+    toast("Instale o APK Android para usar a interface de áudio USB.");
+    return;
+  }
+  stopDemo(true);
+  syncNativeSettings();
+  native.startEngine(
+    Number($("#input-device").value),
+    Number($("#output-device").value),
+  );
+  $("#native-status").textContent = "Conectando entrada de áudio…";
+});
+$("#disconnect-guitar").addEventListener("click", () => {
+  if (native) native.stopEngine();
+});
+if (!native) {
+  $("#connect-guitar").title = "Requer o APK Android";
+  $("#drive-status").textContent =
+    "Prévia web: exportação local. Drive pelo APK.";
+} else {
+  $("#native-status").textContent =
+    "Motor nativo pronto · Conecte sua interface USB";
+  native.refreshDevices();
+}
+window.onRigNativeEvent = (event) => {
+  const payload = event.payload;
+  if (event.type === "driveSync") {
+    $("#drive-status").textContent = String(payload);
+  } else if (event.type === "message" || event.type === "error")
+    toast(String(payload));
+  else if (event.type === "importPresets") importPresetArray(payload);
+  else if (event.type === "library") {
+    nativeLibraryReady = true;
+    nativeIrs = Array.isArray(payload.irs) ? payload.irs : [];
+    selectedIrId = payload.selectedIr || selectedIrId;
+    renderIrList();
+    $("#drive-status").textContent = payload.folderConnected
+      ? "Pasta escolhida no Android. A conta é a selecionada no provedor."
+      : "Pasta ainda não vinculada";
+    $("#ir-status").textContent =
+      `${nativeIrs.length} IRs salvos · WAV até 8192 amostras usadas a 48 kHz.`;
+  } else if (event.type === "devices") {
+    for (const [id, list] of [
+      ["input-device", payload.inputs],
+      ["output-device", payload.outputs],
+    ]) {
+      const select = $("#" + id),
+        previous = select.value;
+      select.replaceChildren();
+      const option = document.createElement("option");
+      option.value = "0";
+      option.textContent = "Padrão do Android";
+      select.append(option);
+      (list || []).forEach((d) => {
+        const o = document.createElement("option");
+        o.value = d.id;
+        o.textContent =
+          d.name +
+          " · " +
+          ([11, 12, 22].includes(d.type) ? "USB" : "dispositivo");
+        select.append(o);
+      });
+      if ([...select.options].some((o) => o.value === previous))
+        select.value = previous;
+    }
+  } else if (event.type === "engine") {
+    applyLoopStatus({
+      state: payload.loopState || 0,
+      frames: payload.loopFrames || 0,
+      position: payload.loopPosition || 0,
+      sampleRate: payload.sampleRate || 48000,
+    });
+    const wasLive = nativeLive;
+    nativeLive = Boolean(payload.running);
+    if (wasLive && !nativeLive) {
+      $("#meter i").style.width = "0";
+      $("#meter-value").textContent = "−∞ dB";
+      $("#output-indicator").classList.remove("active");
+      $("#status-text").textContent = "Pronto";
+    }
+    $("#disconnect-guitar").disabled = !nativeLive;
+    $("#connect-guitar").disabled = nativeLive;
+    $(".native-indicator").classList.toggle("active", nativeLive);
+    $("#native-status").textContent = nativeLive
+      ? `48 kHz · buffer ${payload.bufferFrames} frames · xruns ${payload.xruns} (latência não medida)`
+      : "Motor nativo parado";
+    if (nativeLive) {
+      const peak = Math.max(0, Number(payload.level) || 0),
+        db = peak > 0 ? 20 * Math.log10(peak) : -Infinity;
+      $("#meter i").style.width =
+        Math.max(0, Math.min(100, ((db + 60) / 60) * 100)) + "%";
+      $("#meter-value").textContent =
+        db > -90 ? db.toFixed(1) + " dB" : "−∞ dB";
+      $("#output-indicator").classList.toggle("active", peak > 0.001);
+      $("#status-text").textContent = "Guitarra ao vivo";
+    }
+  }
+};
+function renderDock() {
+  $("#mode-guitar").setAttribute(
+    "aria-pressed",
+    String(instrumentMode === "guitar"),
+  );
+  $("#mode-acoustic").setAttribute(
+    "aria-pressed",
+    String(instrumentMode === "acoustic"),
+  );
+  $("#delay-bpm").value = delaySync.bpm;
+  $("#delay-sync").setAttribute("aria-pressed", String(delaySync.on));
+  if (typeof quick !== "undefined") renderQuickPresets();
+  document
+    .querySelectorAll("[data-dock-effect]")
+    .forEach((button) =>
+      button.setAttribute(
+        "aria-pressed",
+        String(Boolean(pedalState[Number(button.dataset.dockEffect)]?.on)),
+      ),
+    );
+  $("#chorus-toggle").setAttribute("aria-pressed", String(chorusState.on));
+  $("#chorus-rate").value = chorusState.rate;
+  $("#chorus-depth").value = chorusState.depth;
+  document
+    .querySelectorAll("[data-quick-preset]")
+    .forEach((button) =>
+      button.setAttribute(
+        "aria-pressed",
+        String(Number(button.dataset.quickPreset) === current),
+      ),
+    );
+}
+document.querySelectorAll("[data-dock-effect]").forEach((button) =>
+  button.addEventListener("click", () => {
+    const p = pedalState[Number(button.dataset.dockEffect)];
+    p.on = !p.on;
+    renderPedals();
+    renderComponents();
+    connectAudio();
+    updateAudio();
+  }),
+);
+$("#chorus-toggle").addEventListener("click", () => {
+  chorusState.on = !chorusState.on;
+  connectAudio();
+  updateAudio();
+});
+for (const [id, key] of [
+  ["chorus-rate", "rate"],
+  ["chorus-depth", "depth"],
+])
+  $("#" + id).addEventListener("input", (event) => {
+    chorusState[key] = Number(event.target.value);
+    updateAudio();
+  });
+function webLoopActive() {
+  return !native && [1, 2, 5].includes(loopInfo.state);
+}
+function loopClock(frames, rate) {
+  const seconds = Math.floor(frames / rate);
+  return (
+    String(Math.floor(seconds / 60)).padStart(2, "0") +
+    ":" +
+    String(seconds % 60).padStart(2, "0")
+  );
+}
+function applyLoopStatus(info) {
+  loopInfo = info;
+  const state = info.state,
+    hasAudio = info.frames > 0;
+  $("#loop-record").setAttribute("aria-pressed", String(state === 1));
+  $("#loop-overdub").setAttribute("aria-pressed", String(state === 5));
+  $("#loop-play").setAttribute("aria-pressed", String(state === 2));
+  $("#loop-play").disabled = !hasAudio;
+  $("#loop-stop").disabled = ![1, 2, 5].includes(state);
+  $("#loop-clear").disabled = !hasAudio && state !== 1;
+  $("#loop-overdub").disabled = !hasAudio || state === 1;
+  const messages = {
+    0: "Loop de até 30 s · em memória",
+    1: "Gravando… toque em REC para fechar o loop",
+    2: "Reproduzindo loop",
+    3: "Loop parado · pronto para reproduzir",
+    5: "Overdub ativo · toque em DUB para concluir",
+  };
+  const label = messages[state] || messages[0];
+  if ($("#loop-status").textContent !== label)
+    $("#loop-status").textContent = label;
+  $("#loop-time").value =
+    loopClock(info.position, info.sampleRate) +
+    " / " +
+    (state === 1 || !hasAudio
+      ? "00:30"
+      : loopClock(info.frames, info.sampleRate));
+}
+async function ensureWebLooper() {
+  if (!audio) initializeAudio();
+  if (audio.looper) return;
+  if (!audio.ctx.audioWorklet)
+    throw Error("Este navegador não suporta o looper. Use o APK Android.");
+  if (!looperReady)
+    looperReady = (async () => {
+      const url = URL.createObjectURL(
+        new Blob([window.RigLooperCode], { type: "text/javascript" }),
+      );
+      try {
+        await audio.ctx.audioWorklet.addModule(url);
+        audio.looper = new AudioWorkletNode(audio.ctx, "rig-loop", {
+          numberOfInputs: 1,
+          numberOfOutputs: 1,
+          outputChannelCount: [1],
+        });
+        audio.looper.port.onmessage = (event) => {
+          applyLoopStatus(event.data);
+          if (!playing && [0, 3].includes(loopInfo.state))
+            audio.ctx.suspend().catch(() => {});
+        };
+        connectAudio();
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    })().catch((error) => {
+      looperReady = null;
+      throw error;
+    });
+  await looperReady;
+}
+async function commandLoop(command) {
+  try {
+    if (native) {
+      if (!nativeLive && [1, 2, 5].includes(command)) {
+        toast("Conecte a guitarra antes de usar o looper nativo.");
+        return;
+      }
+      native.looperCommand(command);
+      applyLoopStatus({
+        ...loopInfo,
+        state: command === 4 ? 0 : command,
+        frames: command === 1 || command === 4 ? 0 : loopInfo.frames,
+        position: 0,
+      });
+      return;
+    }
+    await ensureWebLooper();
+    if ([1, 2, 5].includes(command)) {
+      await audio.ctx.resume();
+      cancelAnimationFrame(meterFrame);
+    }
+    audio.looper.port.postMessage(command);
+    if (command === 1 && !playing) $("#play-demo").click();
+    if (command === 2 || command === 5) {
+      loopInfo.state = command;
+      drawMeter();
+    }
+  } catch (error) {
+    toast(error.message || "Não foi possível iniciar o looper.");
+  }
+}
+$("#loop-record").addEventListener("click", () =>
+  commandLoop(loopInfo.state === 1 ? 2 : 1),
+);
+$("#loop-play").addEventListener("click", () => commandLoop(2));
+$("#loop-overdub").addEventListener("click", () =>
+  commandLoop(loopInfo.state === 5 ? 2 : 5),
+);
+$("#loop-stop").addEventListener("click", () => commandLoop(3));
+$("#loop-clear").addEventListener("click", () => {
+  if (loopInfo.state === 1) {
+    toast("Pare a gravação antes de apagar o loop.");
+    return;
+  }
+  commandLoop(4);
+});
+const guitarQuick = [
+  "The Black Strat",
+  "Brown Sound",
+  "Red Special",
+  "Woman Tone",
+  "Texas Flood",
+  "Appetite Tone",
+  "Sultans of Swing",
+  "The Edge",
+];
+const acousticQuick = [
+  "Acoustic · Martin",
+  "Acoustic · Taylor",
+  "Acoustic · Gibson",
+  "Acoustic · Yamaha",
+  "Acoustic · Fender",
+  "Acoustic · Takamine",
+  "Acoustic Studio",
+  "Acoustic Ambient",
+];
+const quick = document.createElement("div");
+quick.className = "dock-presets";
+quick.setAttribute("aria-label", "Oito timbres de acesso rápido");
+function renderQuickPresets() {
+  quick.replaceChildren();
+  const choices = instrumentMode === "guitar" ? guitarQuick : acousticQuick;
+  choices.forEach((name, slot) => {
+    const index = presets.findIndex((p) => p.name === name);
+    if (index < 0) return;
+    const button = document.createElement("button");
+    button.dataset.quickPreset = index;
+    button.title = name;
+    button.setAttribute("aria-label", `Timbre ${slot + 1}: ${name}`);
+    button.setAttribute("aria-pressed", String(index === current));
+    const number = document.createElement("b");
+    number.textContent = String(slot + 1);
+    const label = document.createElement("span");
+    label.textContent = name;
+    button.append(number, label);
+    button.addEventListener("click", () => {
+      loadPreset(index);
+      toast(name + " carregado.");
+    });
+    quick.append(button);
+  });
+}
+function setInstrumentMode(mode) {
+  instrumentMode = mode;
+  bankFilter = "all";
+  filter = "all";
+  $("#search").value = "";
+  document
+    .querySelectorAll("[data-bank]")
+    .forEach((b) => b.classList.toggle("selected", b.dataset.bank === "all"));
+  document.querySelector("[data-filter=all]").click();
+  const name = mode === "guitar" ? guitarQuick[0] : acousticQuick[0];
+  const index = presets.findIndex((p) => p.name === name);
+  if (index >= 0) loadPreset(index);
+}
+$("#mode-guitar").addEventListener("click", () => setInstrumentMode("guitar"));
+$("#mode-acoustic").addEventListener("click", () =>
+  setInstrumentMode("acoustic"),
+);
+$("#delay-bpm").addEventListener("change", (event) => {
+  const value = Number(event.target.value);
+  delaySync.bpm = Number.isFinite(value)
+    ? Math.max(45, Math.min(240, value))
+    : 120;
+  delaySync.on = true;
+  updateAudio();
+});
+$("#delay-sync").addEventListener("click", () => {
+  delaySync.on = !delaySync.on;
+  updateAudio();
+});
+$("#delay-tap").addEventListener("click", () => {
+  const now = performance.now();
+  if (tapTimes.length && now - tapTimes.at(-1) > 2000) tapTimes = [];
+  tapTimes.push(now);
+  if (tapTimes.length > 5) tapTimes.shift();
+  if (tapTimes.length >= 2) {
+    const interval = (tapTimes.at(-1) - tapTimes[0]) / (tapTimes.length - 1);
+    delaySync.bpm = Math.max(45, Math.min(240, Math.round(60000 / interval)));
+    delaySync.on = true;
+    updateAudio();
+  }
+});
+renderQuickPresets();
+$(".effects-dock").append(quick);
+const sizeDock = () =>
+  document.documentElement.style.setProperty(
+    "--dock-height",
+    Math.ceil($(".effects-dock").getBoundingClientRect().height + 16) + "px",
+  );
+if (window.ResizeObserver)
+  new ResizeObserver(sizeDock).observe($(".effects-dock"));
+window.addEventListener("resize", sizeDock);
+sizeDock();
+$("#loop-time").setAttribute("aria-live", "off");
+loadPreset(0);
+
+</script>
   </body>
 </html>
